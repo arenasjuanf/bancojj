@@ -1,7 +1,4 @@
-<nav class="navbar navbar-expand-lg align-items-lg-center container-p-x" [ngClass]="currentBg()">
-
-  <!-- Brand -->
-  <a routerLink="/" class="navbar-brand">Angular Starter</a>
+<nav class="navbar navbar-dark bg-dark navbar-expand-lg align-items-lg-center container-p-x" [ngClass]="currentBg()">
 
   <!-- Sidenav toggle -->
   <div class="navbar-nav align-items-lg-center mr-auto mr-lg-4" *ngIf="sidenavToggle">
@@ -10,16 +7,19 @@
     </a>
   </div>
 
-  <!-- Navbar toggle -->
-  <button class="navbar-toggler" type="button" (click)="isExpanded = !isExpanded">
-    <span class="navbar-toggler-icon"></span>
-  </button>
+  <!-- Brand -->
+  <a routerLink="/" class="navbar-brand">Banco - WD</a>
 
-  <div class="navbar-collapse collapse" [ngbCollapse]="!isExpanded">
+  <!-- Navbar toggle -->
+  <!-- <button class="navbar-toggler" type="button" (click)="isExpanded = !isExpanded">
+    <span class="navbar-toggler-icon"></span>
+  </button> -->
+
+  <!-- <div class="navbar-collapse collapse" [ngbCollapse]="!isExpanded">
     <div class="navbar-nav align-items-lg-center">
       <div class="nav-item"><a class="nav-link" href="#">Link 1</a></div>
       <div class="nav-item"><a class="nav-link" href="#">Link 2</a></div>
     </div>
-  </div>
+  </div> -->
 
 </nav>

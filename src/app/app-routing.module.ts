@@ -22,19 +22,22 @@ import { LayoutWithoutSidenavComponent } from './layout/layout-without-sidenav/l
 
 import { HomeComponent } from './home/home.component';
 import { Page2Component } from './page-2/page-2.component';
+import { LoginComponent } from './auth/login/login.component';
 
 // *******************************************************************************
 // Routes
 
 const routes: Routes = [
 
-  { path: '', component: LayoutWithoutNavbarComponent, pathMatch: 'full', children: [
+  { path: '', component: Layout1FlexComponent, pathMatch: 'full', children: [
     { path: '', component: HomeComponent },
   ]},
 
-  { path: 'page-2', component: LayoutWithoutNavbarComponent, children: [
+  { path: 'page-2', component: Layout1FlexComponent, children: [
     { path: '', component: Page2Component },
   ]},
+
+  { path: 'login', component: LoginComponent},
 
   // 404 Not Found page
   { path: '**', component: NotFoundComponent }

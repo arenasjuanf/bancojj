@@ -22,6 +22,7 @@ import { LayoutModule } from './layout/layout.module';
 
 import { HomeComponent } from './home/home.component';
 import { Page2Component } from './page-2/page-2.component';
+import { LoginComponent } from './auth/login/login.component';
 
 // *******************************************************************************
 //
@@ -33,7 +34,8 @@ import { Page2Component } from './page-2/page-2.component';
 
     // Pages
     HomeComponent,
-    Page2Component
+    Page2Component,
+    LoginComponent
   ],
 
   imports: [
@@ -42,7 +44,10 @@ import { Page2Component } from './page-2/page-2.component';
 
     // App
     AppRoutingModule,
-    LayoutModule
+    LayoutModule,
+    FormsModule,
+    ReactiveFormsModule,
+    BrowserAnimationsModule
   ],
 
   providers: [
