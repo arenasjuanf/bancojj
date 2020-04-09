@@ -22,6 +22,9 @@ import { LayoutModule } from './layout/layout.module';
 import { HomeComponent } from './home/home.component';
 import { Page2Component } from './page-2/page-2.component';
 import { UsuariosComponent } from './gestion/usuarios/usuarios.component';
+import { LoginComponent } from './auth/login/login.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 // *******************************************************************************
 //
@@ -34,7 +37,8 @@ import { UsuariosComponent } from './gestion/usuarios/usuarios.component';
     // Pages
     HomeComponent,
     Page2Component,
-    UsuariosComponent
+    UsuariosComponent,
+    LoginComponent,
   ],
 
   imports: [
@@ -44,7 +48,10 @@ import { UsuariosComponent } from './gestion/usuarios/usuarios.component';
     // App
     AppRoutingModule,
     LayoutModule,
-    PerfectScrollbarModule
+    PerfectScrollbarModule,
+    FormsModule,
+    ReactiveFormsModule,
+    BrowserAnimationsModule,
   ],
 
   providers: [

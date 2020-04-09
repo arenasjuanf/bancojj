@@ -12,6 +12,7 @@ import { LayoutWithoutNavbarComponent } from './layout/layout-without-navbar/lay
 import { HomeComponent } from './home/home.component';
 import { Page2Component } from './page-2/page-2.component';
 import { UsuariosComponent } from './gestion/usuarios/usuarios.component';
+import { LoginComponent } from './auth/login/login.component';
 
 // *******************************************************************************
 // Routes
@@ -30,6 +31,7 @@ const routes: Routes = [
       path: 'usuarios', component: UsuariosComponent
     }]
   },
+   { path: 'login', component: LoginComponent},
   // 404 Not Found page
   { path: '**', component: NotFoundComponent },
 ];
