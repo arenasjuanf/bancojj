@@ -12,7 +12,7 @@ export class UsuariosComponent implements OnInit {
 
   constructor() { }
 
-  @HostBinding('class') hostClasses = 'd-flex flex-grow-1 align-items-stretch';
+  @HostBinding('class') hostClasses = 'd-flex flex-grow-1 align-items-stretch h-100';
 
   selected: any = null;
   sideboxOpened = false;
