@@ -28,7 +28,6 @@
             ],
             "styles": [
               "src/styles.scss",
-
               "src/vendor/styles/bootstrap.scss",
               "src/vendor/styles/appwork.scss",
               "src/vendor/styles/theme-corporate.scss",
@@ -39,10 +38,12 @@
           },
           "configurations": {
             "production": {
-              "fileReplacements": [{
-                "replace": "src/environments/environment.ts",
-                "with": "src/environments/environment.prod.ts"
-              }],
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.prod.ts"
+                }
+              ],
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
@@ -133,5 +134,8 @@
       }
     }
   },
-  "defaultProject": "angular-starter"
+  "defaultProject": "angular-starter",
+  "cli": {
+    "analytics": "2360ee2d-acee-4e10-9576-0cd6e4ffcb44"
+  }
 }

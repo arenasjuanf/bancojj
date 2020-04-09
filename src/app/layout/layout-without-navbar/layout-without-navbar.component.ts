@@ -10,7 +10,7 @@ export class LayoutWithoutNavbarComponent implements AfterViewInit, OnDestroy {
   // Prevent "blink" effect
   public initialized = false;
 
-  constructor(private layoutService: LayoutService) {}
+  constructor(private layoutService: LayoutService) { }
 
   ngAfterViewInit() {
     setTimeout(() => {

@@ -1,7 +1,6 @@
 import { BrowserModule, Title } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 
 // *******************************************************************************
 // NgBootstrap
@@ -22,6 +21,7 @@ import { LayoutModule } from './layout/layout.module';
 
 import { HomeComponent } from './home/home.component';
 import { Page2Component } from './page-2/page-2.component';
+import { UsuariosComponent } from './gestion/usuarios/usuarios.component';
 
 // *******************************************************************************
 //
@@ -33,7 +33,8 @@ import { Page2Component } from './page-2/page-2.component';
 
     // Pages
     HomeComponent,
-    Page2Component
+    Page2Component,
+    UsuariosComponent
   ],
 
   imports: [
@@ -42,7 +43,8 @@ import { Page2Component } from './page-2/page-2.component';
 
     // App
     AppRoutingModule,
-    LayoutModule
+    LayoutModule,
+    PerfectScrollbarModule
   ],
 
   providers: [
