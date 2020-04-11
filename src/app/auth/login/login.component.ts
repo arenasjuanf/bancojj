@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AppService } from 'src/app/app.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -9,8 +10,8 @@ import { AppService } from 'src/app/app.service';
   ]
 })
 export class LoginComponent implements OnInit {
-  constructor(private appService: AppService) {
-    this.appService.pageTitle = 'Inicia Sesion';
+  constructor(private appService: AppService, private router: Router) {
+    this.appService.pageTitle = 'Inicia Sesión';
   }
 
   credentials = {
@@ -20,6 +21,10 @@ export class LoginComponent implements OnInit {
   };
 
   ngOnInit() {
+  }
+
+  signIn(){
+    this.router.navigateByUrl('');
   }
 
 }
