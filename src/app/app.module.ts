@@ -25,6 +25,9 @@ import { UsuariosComponent } from './gestion/usuarios/usuarios.component';
 import { LoginComponent } from './auth/login/login.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { CuentasComponent } from './gestion/cuentas/cuentas.component';
+import { CustomDaterangePickerComponent } from './gestion/custom-daterange-picker/custom-daterange-picker.component';
+import { HttpClientModule } from '@angular/common/http';
 
 // *******************************************************************************
 //
@@ -39,6 +42,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     Page2Component,
     UsuariosComponent,
     LoginComponent,
+    CuentasComponent,
+    CustomDaterangePickerComponent,
   ],
 
   imports: [
@@ -52,6 +57,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     FormsModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
+    HttpClientModule,
   ],
 
   providers: [
