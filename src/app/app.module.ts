@@ -25,6 +25,7 @@ import { UsuariosComponent } from './gestion/usuarios/usuarios.component';
 import { LoginComponent } from './auth/login/login.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { CrearUsuariosComponent } from './gestion/crear-usuarios/crear-usuarios.component';
 
 // *******************************************************************************
 //
@@ -39,6 +40,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     Page2Component,
     UsuariosComponent,
     LoginComponent,
+    CrearUsuariosComponent,
   ],
 
   imports: [

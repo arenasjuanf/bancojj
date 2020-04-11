@@ -56,4 +56,5 @@ export class LayoutSidenavComponent implements AfterViewInit {
   toggleSidenav() {
     this.layoutService.toggleCollapsed();
   }
+
 }
