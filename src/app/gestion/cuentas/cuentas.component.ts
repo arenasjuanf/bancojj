@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-cuentas',
@@ -8,17 +8,26 @@ import { HttpClient } from '@angular/common/http';
 })
 export class CuentasComponent implements OnInit {
 
+  formFilter: FormGroup;
   isRTL: boolean;
 
-  constructor(private http: HttpClient) {
+  constructor(private formBuilder: FormBuilder) {
     this.loadData();
   }
 
-  ngOnInit(): void { }
+  ngOnInit(): void {
+    this.configForm();
+  }
+
+  configForm() {
+    this.formFilter = this.formBuilder.group({
+      rol: new FormControl('', { validators: Validators.required }),
+      estado: new FormControl('', { validators: Validators.required }),
+      fecha: new FormControl('', { validators: Validators.required }),
+    });
+  }
 
   // Filters
-
-  filterVerified = 'Any';
   filterRole = 'Any';
   filterStatus = 'Any';
   filterLatestActivity = [null, null];
@@ -27,7 +36,6 @@ export class CuentasComponent implements OnInit {
   // Table
 
   // Options
-  dataUrl = 'assets/json/pages_users_list.json';
   searchKeys = ['id', 'account', 'email', 'name'];
   sortBy = 'id';
   sortDesc = true;
@@ -48,7 +56,6 @@ export class CuentasComponent implements OnInit {
         "email": "gmay@mail.com",
         "name": "Goldie May",
         "latestActivity": "05/23/2018",
-        "verified": false,
         "role": 1,
         "status": 1
       },
@@ -58,7 +65,6 @@ export class CuentasComponent implements OnInit {
         "email": "hballard@mail.com",
         "name": "Harper Ballard",
         "latestActivity": "03/28/2018",
-        "verified": true,
         "role": 3,
         "status": 1
       },
@@ -68,7 +74,6 @@ export class CuentasComponent implements OnInit {
         "email": "sguzman@mail.com",
         "name": "Stevens Guzman",
         "latestActivity": "05/04/2018",
-        "verified": false,
         "role": 3,
         "status": 3
       },
@@ -78,7 +83,6 @@ export class CuentasComponent implements OnInit {
         "email": "mstokes@mail.com",
         "name": "Mercer Stokes",
         "latestActivity": "04/27/2018",
-        "verified": false,
         "role": 4,
         "status": 1
       },
@@ -88,7 +92,6 @@ export class CuentasComponent implements OnInit {
         "email": "lbarber@mail.com",
         "name": "Lily Barber",
         "latestActivity": "04/29/2018",
-        "verified": false,
         "role": 1,
         "status": 2
       },
@@ -98,7 +101,6 @@ export class CuentasComponent implements OnInit {
         "email": "mbenjamin@mail.com",
         "name": "Morse Benjamin",
         "latestActivity": "03/19/2018",
-        "verified": true,
         "role": 2,
         "status": 2
       },
@@ -108,7 +110,6 @@ export class CuentasComponent implements OnInit {
         "email": "ngay@mail.com",
         "name": "Nixon Gay",
         "latestActivity": "05/31/2018",
-        "verified": false,
         "role": 3,
         "status": 2
       },
@@ -118,7 +119,6 @@ export class CuentasComponent implements OnInit {
         "email": "shenderson@mail.com",
         "name": "Sweeney Henderson",
         "latestActivity": "07/10/2018",
-        "verified": false,
         "role": 4,
         "status": 2
       },
@@ -128,7 +128,6 @@ export class CuentasComponent implements OnInit {
         "email": "etanner@mail.com",
         "name": "Edna Tanner",
         "latestActivity": "06/22/2018",
-        "verified": true,
         "role": 4,
         "status": 3
       },
@@ -138,7 +137,6 @@ export class CuentasComponent implements OnInit {
         "email": "kstrickland@mail.com",
         "name": "Kaye Strickland",
         "latestActivity": "04/28/2018",
-        "verified": false,
         "role": 3,
         "status": 1
       },
@@ -148,7 +146,6 @@ export class CuentasComponent implements OnInit {
         "email": "tcruz@mail.com",
         "name": "Taylor Cruz",
         "latestActivity": "07/14/2018",
-        "verified": false,
         "role": 2,
         "status": 1
       },
@@ -158,7 +155,6 @@ export class CuentasComponent implements OnInit {
         "email": "mlivingston@mail.com",
         "name": "Mullins Livingston",
         "latestActivity": "04/17/2018",
-        "verified": false,
         "role": 4,
         "status": 2
       },
@@ -168,7 +164,6 @@ export class CuentasComponent implements OnInit {
         "email": "frichard@mail.com",
         "name": "Fitzgerald Richard",
         "latestActivity": "03/17/2018",
-        "verified": false,
         "role": 2,
         "status": 2
       },
@@ -178,7 +173,6 @@ export class CuentasComponent implements OnInit {
         "email": "cduffy@mail.com",
         "name": "Cain Duffy",
         "latestActivity": "07/08/2018",
-        "verified": false,
         "role": 3,
         "status": 1
       },
@@ -188,7 +182,6 @@ export class CuentasComponent implements OnInit {
         "email": "fgrimes@mail.com",
         "name": "Frazier Grimes",
         "latestActivity": "03/21/2018",
-        "verified": true,
         "role": 2,
         "status": 3
       },
@@ -198,7 +191,6 @@ export class CuentasComponent implements OnInit {
         "email": "wreed@mail.com",
         "name": "Ward Reed",
         "latestActivity": "04/23/2018",
-        "verified": false,
         "role": 3,
         "status": 3
       },
@@ -208,7 +200,6 @@ export class CuentasComponent implements OnInit {
         "email": "lmontoya@mail.com",
         "name": "Latonya Montoya",
         "latestActivity": "04/22/2018",
-        "verified": false,
         "role": 4,
         "status": 3
       },
@@ -218,7 +209,6 @@ export class CuentasComponent implements OnInit {
         "email": "sgilmore@mail.com",
         "name": "Small Gilmore",
         "latestActivity": "07/25/2018",
-        "verified": true,
         "role": 1,
         "status": 3
       }

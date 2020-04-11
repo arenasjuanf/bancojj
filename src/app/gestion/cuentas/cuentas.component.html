@@ -4,34 +4,28 @@
 
 <!-- Filters -->
 <div class="ui-bordered px-4 pt-4 mb-4">
-  <div class="form-row align-items-center">
+  <form class="form-row align-items-center" [formGroup]="formFilter">
     <div class="col-md mb-4">
-      <label class="form-label">Verified</label>
-      <select class="custom-select" [(ngModel)]="filterVerified">
-        <option *ngFor="let item of ['Any', 'Yes', 'No']" [value]="item">{{item}}</option>
-      </select>
-    </div>
-    <div class="col-md mb-4">
-      <label class="form-label">Role</label>
-      <select class="custom-select" [(ngModel)]="filterRole">
+      <label class="form-label">Rol</label>
+      <select class="custom-select" formControlName="rol">
         <option *ngFor="let item of ['Any', 'User', 'Author', 'Staff', 'Admin']" [value]="item">{{item}}</option>
       </select>
     </div>
     <div class="col-md mb-4">
-      <label class="form-label">Status</label>
-      <select class="custom-select" [(ngModel)]="filterStatus">
+      <label class="form-label">Estado</label>
+      <select class="custom-select" formControlName="estado">
         <option *ngFor="let item of ['Any', 'Active', 'Banned', 'Deleted']" [value]="item">{{item}}</option>
       </select>
     </div>
     <div class="col-md mb-4">
-      <label class="form-label">Latest activity</label>
-      <custom-daterange-picker [(ngModel)]="filterLatestActivity"></custom-daterange-picker>
+      <label class="form-label">Fecha creación</label>
+      <custom-daterange-picker formControlName="fecha"></custom-daterange-picker>
     </div>
     <div class="col-md col-xl-2 mb-4">
       <label class="form-label d-none d-md-block">&nbsp;</label>
       <button type="button" class="btn btn-secondary btn-block">Show</button>
     </div>
-  </div>
+  </form>
 </div>
 <!-- / Filters -->
 
@@ -42,7 +36,7 @@
 
     <div class="row">
       <div class="col">
-        Per page: &nbsp;
+        Por paginas: &nbsp;
         <select [(ngModel)]="perPage" (change)="update()" class="custom-select custom-select-sm d-inline-block w-auto">
           <option *ngFor="let limit of [10, 20, 30, 40, 50]">{{limit}}</option>
         </select>
@@ -66,32 +60,32 @@
             ID<i class="ion text-muted ml-2" *ngIf="sortBy=='id'"
               [ngClass]="'ion-md-arrow-' + (sortDesc ? 'down' : 'up')"></i>
           </th>
+          <th class="text-nowrap cursor-pointer" (click)="setSort('nro_documento')">
+            Documento<i class="ion text-muted ml-2" *ngIf="sortBy=='nro_documento'"
+              [ngClass]="'ion-md-arrow-' + (sortDesc ? 'down' : 'up')"></i>
+          </th>
           <th class="text-nowrap cursor-pointer" (click)="setSort('account')">
-            Account<i class="ion text-muted ml-2" *ngIf="sortBy=='account'"
+            Usuario<i class="ion text-muted ml-2" *ngIf="sortBy=='account'"
               [ngClass]="'ion-md-arrow-' + (sortDesc ? 'down' : 'up')"></i>
           </th>
           <th class="text-nowrap cursor-pointer" (click)="setSort('email')">
-            Email<i class="ion text-muted ml-2" *ngIf="sortBy=='email'"
+            Correo<i class="ion text-muted ml-2" *ngIf="sortBy=='email'"
               [ngClass]="'ion-md-arrow-' + (sortDesc ? 'down' : 'up')"></i>
           </th>
           <th class="text-nowrap cursor-pointer" (click)="setSort('name')">
-            Name<i class="ion text-muted ml-2" *ngIf="sortBy=='name'"
+            Nombre<i class="ion text-muted ml-2" *ngIf="sortBy=='name'"
               [ngClass]="'ion-md-arrow-' + (sortDesc ? 'down' : 'up')"></i>
           </th>
-          <th class="text-nowrap cursor-pointer" (click)="setSort('latestActivity')">
-            Latest activity<i class="ion text-muted ml-2" *ngIf="sortBy=='latestActivity'"
-              [ngClass]="'ion-md-arrow-' + (sortDesc ? 'down' : 'up')"></i>
-          </th>
-          <th class="text-nowrap cursor-pointer" (click)="setSort('verified')">
-            Verified<i class="ion text-muted ml-2" *ngIf="sortBy=='verified'"
+          <th class="text-nowrap cursor-pointer" (click)="setSort('fecha_creacion')">
+            Fecha creación<i class="ion text-muted ml-2" *ngIf="sortBy=='fecha_creacion'"
               [ngClass]="'ion-md-arrow-' + (sortDesc ? 'down' : 'up')"></i>
           </th>
           <th class="text-nowrap cursor-pointer" (click)="setSort('role')">
-            Role<i class="ion text-muted ml-2" *ngIf="sortBy=='role'"
+            Rol<i class="ion text-muted ml-2" *ngIf="sortBy=='role'"
               [ngClass]="'ion-md-arrow-' + (sortDesc ? 'down' : 'up')"></i>
           </th>
           <th class="text-nowrap cursor-pointer" (click)="setSort('status')">
-            Status<i class="ion text-muted ml-2" *ngIf="sortBy=='status'"
+            Estado<i class="ion text-muted ml-2" *ngIf="sortBy=='status'"
               [ngClass]="'ion-md-arrow-' + (sortDesc ? 'down' : 'up')"></i>
           </th>
           <th></th>
@@ -100,14 +94,11 @@
       <tbody>
         <tr *ngFor="let user of usersData">
           <td class="align-middle">{{user['id']}}</td>
-          <td class="align-middle"><a href="javascript:void(0)">{{user['account']}}</a></td>
+          <td class="align-middle">{{user['nro_documento']}}</td>
+          <td class="align-middle">{{user['account']}}</td>
           <td class="align-middle">{{user['email']}}</td>
           <td class="align-middle">{{user['name']}}</td>
-          <td class="align-middle">{{user['latestActivity']}}</td>
-          <td class="align-middle">
-            <span class="ion"
-              [ngClass]="{'ion-md-checkmark text-primary': user['verified'], 'ion-md-close text-light': !user['verified']}"></span>
-          </td>
+          <td class="align-middle">{{user['fecha_creacion']}}</td>
           <td class="align-middle">
             <span *ngIf="user['role'] === 1">User</span>
             <span *ngIf="user['role'] === 2">Author</span>
