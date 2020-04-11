@@ -34,14 +34,15 @@ const routes: Routes = [
     path: '', component: Layout2Component, children: [{
       path: 'usuarios/listar', component: UsuariosComponent
     }]
-  }, {
-    path: '', component: Layout1FlexComponent, children: [{
-      path: 'cuentas', component: CuentasComponent
-    }]
   },
   {
     path: '', component: Layout2Component, children: [{
       path: 'usuarios/crear', component: CrearUsuariosComponent
+    }]
+  },
+  {
+    path: '', component: Layout2Component, children: [{
+      path: 'cuentas', component: CuentasComponent
     }]
   },
   { path: 'login', component: LoginComponent},
