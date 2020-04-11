@@ -15,29 +15,36 @@ import { UsuariosComponent } from './gestion/usuarios/usuarios.component';
 import { LoginComponent } from './auth/login/login.component';
 import { Layout1FlexComponent } from './layout/layout-1-flex/layout-1-flex.component';
 import { CuentasComponent } from './gestion/cuentas/cuentas.component';
+import { Layout2Component } from './layout/layout-2/layout-2.component';
+import { CrearUsuariosComponent } from './gestion/crear-usuarios/crear-usuarios.component';
 
 // *******************************************************************************
 // Routes
 
 const routes: Routes = [
   {
-    path: '', component: Layout1FlexComponent, pathMatch: 'full', children: [{
+    path: '', component: Layout2Component, pathMatch: 'full', children: [{
       path: '', component: HomeComponent
     }]
   }, {
-    path: 'page-2', component: Layout1FlexComponent, children: [{
+    path: 'page-2', component: Layout2Component, children: [{
       path: '', component: Page2Component
     }]
   }, {
-    path: '', component: Layout1FlexComponent, children: [{
-      path: 'usuarios', component: UsuariosComponent
+    path: '', component: Layout2Component, children: [{
+      path: 'usuarios/listar', component: UsuariosComponent
     }]
   }, {
     path: '', component: Layout1FlexComponent, children: [{
       path: 'cuentas', component: CuentasComponent
     }]
   },
-  { path: 'login', component: LoginComponent },
+  {
+    path: '', component: Layout2Component, children: [{
+      path: 'usuarios/crear', component: CrearUsuariosComponent
+    }]
+  },
+  { path: 'login', component: LoginComponent},
   // 404 Not Found page
   { path: '**', component: NotFoundComponent },
 ];

@@ -28,6 +28,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CuentasComponent } from './gestion/cuentas/cuentas.component';
 import { HttpClientModule } from '@angular/common/http';
 import { CustomDaterangePickerComponent } from './gestion/custom-daterange-picker/custom-daterange-picker.component';
+import { CrearUsuariosComponent } from './gestion/crear-usuarios/crear-usuarios.component';
 
 // *******************************************************************************
 //
@@ -44,6 +45,7 @@ import { CustomDaterangePickerComponent } from './gestion/custom-daterange-picke
     LoginComponent,
     CuentasComponent,
     CustomDaterangePickerComponent,
+    CrearUsuariosComponent,
   ],
 
   imports: [
