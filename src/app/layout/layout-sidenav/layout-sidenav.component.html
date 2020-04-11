@@ -3,15 +3,29 @@
   <!-- Inner -->
   <div class="sidenav-inner" [ngClass]="{ 'py-1': orientation !== 'horizontal' }">
 
-    <sidenav-router-link icon="ion ion-ios-contact" route="/" [active]="isActive('/')">Home</sidenav-router-link>
-    <sidenav-router-link icon="ion ion-md-desktop" route="/page-2" [active]="isActive('/page-2')">Page 2
+    <sidenav-router-link icon="ion ion-ios-contact" route="/" [active]="isActive('/')">
+      Home
     </sidenav-router-link>
-    <sidenav-router-link icon="ion ion-md-desktop" route="/usuarios" [active]="isActive('/usuarios')">Usuarios
+    
+    <sidenav-router-link icon="ion ion-md-desktop" route="/usuarios" [active]="isActive('/usuarios')">
+      Usuarios
     </sidenav-router-link>
-    <sidenav-router-link icon="ion ion-md-desktop" [routerLink]="'/login'" [active]="isActive('/login')">Login
+
+    <sidenav-router-link icon="ion ion-md-desktop" route="/page-2" [active]="isActive('/page-2')">
+      Mi Perfil
+    </sidenav-router-link>
+
+    <sidenav-router-link icon="ion ion-md-desktop" route="/page-2" [active]="isActive('/page-2')">
+      Cerrar Sesión
     </sidenav-router-link>
     <sidenav-router-link icon="ion ion-md-desktop" [routerLink]="'/cuentas'" [active]="isActive('/cuentas')">Cuentas
     </sidenav-router-link>
+
+   <!--  <sidenav-router-link icon="ion ion-md-desktop" [routerLink]="'/login'" [active]="isActive('/login')">
+      Login
+    </sidenav-router-link> -->
+
+
 
   </div>
 </sidenav>
