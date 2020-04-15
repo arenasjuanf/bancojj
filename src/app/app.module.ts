@@ -31,6 +31,7 @@ import { CustomDaterangePickerComponent } from './gestion/custom-daterange-picke
 import { ListaDinamicaComponent } from './shared/lista-dinamica/lista-dinamica.component';
 import { ConsignacionesComponent } from './gestion/consignaciones/consignaciones.component';
 import { MovimientosComponent } from './gestion/movimientos/movimientos.component';
+import { CrearUsuariosComponent } from './gestion/crear-usuarios/crear-usuarios.component';
 
 // *******************************************************************************
 //
@@ -50,6 +51,7 @@ import { MovimientosComponent } from './gestion/movimientos/movimientos.componen
     ListaDinamicaComponent,
     ConsignacionesComponent,
     MovimientosComponent,
+    CrearUsuariosComponent,
   ],
 
   imports: [
