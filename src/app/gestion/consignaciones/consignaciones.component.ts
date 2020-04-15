@@ -7,10 +7,6 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ConsignacionesComponent implements OnInit {
 
-  searchKeys = ['id', 'account', 'email', 'name'];
-  formProperties = ['rol', 'estado', 'fecha'];
-  listTitle = 'Consignaciones';
-
   constructor() { }
 
   ngOnInit() {

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AppService } from 'src/app/app.service';
 import { Router } from '@angular/router';
 import { DomSanitizer } from '@angular/platform-browser';
+import { AdministradorService } from '../../shared/services/administrador.service';
 
 @Component({
   selector: 'app-login',
@@ -12,7 +13,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 })
 export class LoginComponent implements OnInit {
   fondo: any;
-  constructor(private appService: AppService, private router: Router, private sanitizer: DomSanitizer) {
+  constructor(private appService: AppService, private router: Router, private sanitizer: DomSanitizer, private adminService: AdministradorService) {
     this.appService.pageTitle = 'Inicia Sesión';
     this.fondo = this.setFondo();
   }
