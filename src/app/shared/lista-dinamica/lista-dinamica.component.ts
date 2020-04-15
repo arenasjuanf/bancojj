@@ -14,10 +14,11 @@ export class ListaDinamicaComponent implements OnInit {
   @Input() dataRenderizer: Array<string>;//datos de la consulta
   @Input() title: string;
   formFilter: FormGroup;
-  isRTL: boolean;
-  objeto = {
-    hola: '00000'
-  }
+  status = [{
+    value: 1, viewValue: 'Activo'
+  }, {
+    value: 0, viewValue: 'Inactivo'
+  }]
 
   constructor(private formBuilder: FormBuilder) {
     this.loadData();

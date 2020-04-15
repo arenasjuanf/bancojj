@@ -18,7 +18,7 @@
     <div class="col-md mb-4">
       <label class="form-label">{{ propertiesForm[1] | titlecase }}</label>
       <select class="custom-select" formControlName="estado">
-        <option *ngFor="let item of ['Any', 'Active', 'Banned', 'Deleted']" [value]="item">{{item}}</option>
+        <option *ngFor="let item of status" [value]="item.value">{{item.viewValue}}</option>
       </select>
     </div>
     <div class="col-md mb-4">
@@ -27,7 +27,7 @@
     </div>
     <div class="col-md col-xl-2 mb-4">
       <label class="form-label d-none d-md-block">&nbsp;</label>
-      <button type="submit" class="btn btn-secondary btn-block">Show</button>
+      <button type="submit" class="btn btn-secondary btn-block">Buscar</button>
     </div>
   </form>
 </div>
@@ -64,35 +64,6 @@
             {{ property | titlecase}}<i class="ion text-muted ml-2" *ngIf="sortBy == property"
               [ngClass]="'ion-md-arrow-' + (sortDesc ? 'down' : 'up')"></i>
           </th>
-          <!-- <th class="text-nowrap cursor-pointer" (click)="setSort('nro_documento')">
-            Documento<i class="ion text-muted ml-2" *ngIf="sortBy=='nro_documento'"
-              [ngClass]="'ion-md-arrow-' + (sortDesc ? 'down' : 'up')"></i>
-          </th>
-          <th class="text-nowrap cursor-pointer" (click)="setSort('account')">
-            Usuario<i class="ion text-muted ml-2" *ngIf="sortBy=='account'"
-              [ngClass]="'ion-md-arrow-' + (sortDesc ? 'down' : 'up')"></i>
-          </th>
-          <th class="text-nowrap cursor-pointer" (click)="setSort('email')">
-            Correo<i class="ion text-muted ml-2" *ngIf="sortBy=='email'"
-              [ngClass]="'ion-md-arrow-' + (sortDesc ? 'down' : 'up')"></i>
-          </th>
-          <th class="text-nowrap cursor-pointer" (click)="setSort('name')">
-            Nombre<i class="ion text-muted ml-2" *ngIf="sortBy=='name'"
-              [ngClass]="'ion-md-arrow-' + (sortDesc ? 'down' : 'up')"></i>
-          </th>
-          <th class="text-nowrap cursor-pointer" (click)="setSort('fecha_creacion')">
-            Fecha creación<i class="ion text-muted ml-2" *ngIf="sortBy=='fecha_creacion'"
-              [ngClass]="'ion-md-arrow-' + (sortDesc ? 'down' : 'up')"></i>
-          </th>
-          <th class="text-nowrap cursor-pointer" (click)="setSort('role')">
-            Rol<i class="ion text-muted ml-2" *ngIf="sortBy=='role'"
-              [ngClass]="'ion-md-arrow-' + (sortDesc ? 'down' : 'up')"></i>
-          </th>
-          <th class="text-nowrap cursor-pointer" (click)="setSort('status')">
-            Estado<i class="ion text-muted ml-2" *ngIf="sortBy=='status'"
-              [ngClass]="'ion-md-arrow-' + (sortDesc ? 'down' : 'up')"></i>
-          </th>
-          <th></th> -->
         </tr>
       </thead>
       <tbody>
@@ -115,20 +86,7 @@
             <span class="badge badge-outline-default" *ngIf="user['status'] === 3">Deleted</span>
           </td>
           <td class="text-center text-nowrap align-middle">
-            <a href="javascript:void(0)" class="btn btn-default btn-xs icon-btn md-btn-flat" ngbTooltip="Edit">
-              <i class="ion ion-md-create"></i>
-            </a>
-            <div class="btn-group" ngbDropdown [placement]="!isRTL ? 'bottom-right' : 'bottom-left'">
-              <button type="button" class="btn btn-default btn-xs icon-btn md-btn-flat hide-arrow" ngbDropdownToggle
-                ngbTooltip="Actions">
-                <i class="ion ion-ios-settings"></i>
-              </button>
-              <div ngbDropdownMenu [class.dropdown-menu-right]="!isRTL">
-                <a class="dropdown-item" href="javascript:void(0)">View profile</a>
-                <a class="dropdown-item" href="javascript:void(0)">Ban user</a>
-                <a class="dropdown-item" href="javascript:void(0)">Remove</a>
-              </div>
-            </div>
+            <a>Ir a...</a>
           </td>
         </tr>
       </tbody>
