@@ -43,15 +43,15 @@ const routes: Routes = [
       path: 'cuentas', component: CuentasComponent
     }]
   }, {
-    path: '', component: Layout1FlexComponent, children: [{
+    path: '', component: Layout2Component, children: [{
       path: 'consignaciones', component: ConsignacionesComponent
     }]
   }, {
-    path: '', component: Layout1FlexComponent, children: [{
+    path: '', component: Layout2Component, children: [{
       path: 'movimientos', component: MovimientosComponent
     }]
   },
-  { path: 'login', component: LoginComponent},
+  { path: 'login', component: LoginComponent },
   // 404 Not Found page
   { path: '**', component: NotFoundComponent },
 ];

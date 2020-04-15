@@ -7,14 +7,18 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MovimientosComponent implements OnInit {
 
-  searchKeys = ['id', 'account', 'email', 'name'];//['id', 'monto', 'saldo_anterior', 'saldo_actual', 'fk_usuario_creador', 'fk_cuenta']
-  formProperties = ['monto', 'estado', 'fecha'];//['id', 'monto', 'saldo_anterior', 'saldo_actual', 'fk_usuario_creador', 'fk_cuenta']
+  searchKeys = ['id', 'monto', 'saldo_anterior', 'saldo_actual', 'fk_usuario_creador', 'fk_cuenta']
+  formProperties = ['monto', 'estado', 'fecha'];
   tableProperties = ['id', 'monto', 'saldo_anterior', 'saldo_Actual', 'creador', 'cuenta', 'transaccion', 'creacion'];
   listTitle = 'Movimientos realizados';
 
   constructor() { }
 
   ngOnInit() {
+  }
+
+  filterSearch(evento) {
+    console.log("Eventoooooo ", evento);
   }
 
 }
