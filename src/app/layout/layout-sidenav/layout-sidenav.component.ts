@@ -2,6 +2,7 @@ import { Component, Input, AfterViewInit, HostBinding } from '@angular/core';
 import { Router } from '@angular/router';
 import { AppService } from '../../app.service';
 import { LayoutService } from '../layout.service';
+import { AdministradorService } from 'src/app/shared/services/administrador.service';
 
 @Component({
   selector: 'app-layout-sidenav',
@@ -15,7 +16,7 @@ export class LayoutSidenavComponent implements AfterViewInit {
   @HostBinding('class.layout-sidenav-horizontal') hostClassHorizontal = false;
   @HostBinding('class.flex-grow-0') hostClassFlex = false;
 
-  constructor(private router: Router, private appService: AppService, private layoutService: LayoutService) {
+  constructor(private router: Router, private appService: AppService, private layoutService: LayoutService, private adminService: AdministradorService) {
     // Set host classes
     this.hostClassVertical = this.orientation !== 'horizontal';
     this.hostClassHorizontal = !this.hostClassVertical;
@@ -55,6 +56,10 @@ export class LayoutSidenavComponent implements AfterViewInit {
 
   toggleSidenav() {
     this.layoutService.toggleCollapsed();
+  }
+
+  logout(){
+    this.adminService.cerrarSesion();
   }
 
 }
