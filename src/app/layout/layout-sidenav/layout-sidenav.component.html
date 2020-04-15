@@ -16,7 +16,7 @@
     <sidenav-router-link icon="ion ion-md-happy" route="/page-2" [active]="isActive('/page-2')">
       Mi Perfil
     </sidenav-router-link>
-    <sidenav-router-link icon="ion ion-md-close">
+    <sidenav-router-link icon="ion ion-md-close" (click)="logout()">
       Cerrar Sesión
     </sidenav-router-link>
     <!-- <sidenav-router-link icon="ion ion-md-desktop" [routerLink]="'/consignaciones'"

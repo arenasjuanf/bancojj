@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +11,8 @@ export class AdministradorService {
   urlBase = environment.urlApi;
 
   constructor(
-    private http: HttpClient
+    private http: HttpClient,
+    private router: Router
   ) {
     console.log('servicio inciado correctamente');
     this.iniciarSesion('narutousumaki', '12345');
@@ -18,15 +20,22 @@ export class AdministradorService {
 
   iniciarSesion(usuario, clave) {
     const credenciales = 'login/' + usuario + '/' + clave;
-    this.http.get(this.construirRuta(credenciales)).subscribe(result => {
-      if (result['success']) {
-        console.log('resultadini: ', result['usuario']);
-      }
-    }, error => {
-      console.log('errorsini: ', error);
-    })
+    return this.http.get(this.construirRuta(credenciales));
   }
 
+  checkearSesion(){
+    if(localStorage.getItem('logged') && localStorage.getItem('datosUsuario')){
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  cerrarSesion(){
+    localStorage.setItem('logged', 'false');
+    localStorage.removeItem('datosUsuario');
+    this.router.navigateByUrl('/login');
+  }
 
   construirRuta(opcion: string) {
     return this.urlBase + opcion;
