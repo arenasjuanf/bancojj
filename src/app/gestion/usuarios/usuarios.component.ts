@@ -1,4 +1,5 @@
 import { Component, OnInit, HostBinding } from '@angular/core';
+import { AdministradorService } from 'src/app/shared/services/administrador.service';
 
 @Component({
   selector: 'app-usuarios',
@@ -10,7 +11,9 @@ import { Component, OnInit, HostBinding } from '@angular/core';
 })
 export class UsuariosComponent implements OnInit {
 
-  constructor() { }
+  constructor( private adminService: AdministradorService) {
+    this.getUsers();  
+  }
 
   @HostBinding('class') hostClasses = 'd-flex flex-grow-1 align-items-stretch h-100';
 
@@ -130,6 +133,33 @@ export class UsuariosComponent implements OnInit {
       { content: 'Ea inani epicurei mea. No docendi antiopam quo, ad dicant viderer cotidieque vix. Ea mea dicat ludus, utroque explicari conclusionemque ius eu, in scaevola tractatos persecuti per.', date: '3 days' }
     ]
   }];
+
+
+  arrayCuentas = [
+    {
+      content: 'cuenta 1',
+      date: '$100.000'
+    },
+    {
+      content: 'cuenta 2',
+      date: '$450.000'
+    }
+  ]
+
+  getUsers(){
+    this.adminService.listarUsuarios().subscribe(
+      result => {
+        console.log('resultadini: ', result);
+        if(result['mensaje']){
+          this.clientsData = result['mensaje'];
+        }
+      },
+      error => {
+        console.log('errorsini: ', error);
+      }
+    )
+  }
+
 
   selectClient(client) {
     this.selected = client;

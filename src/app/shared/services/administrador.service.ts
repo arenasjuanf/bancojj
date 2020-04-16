@@ -41,5 +41,13 @@ export class AdministradorService {
     return this.urlBase + opcion;
   }
 
+  crearUsuario(datos: object){
+    return this.http.post(this.construirRuta('usuarios/crear'), datos);
+  }
+
+  listarUsuarios(){
+    return this.http.get(this.construirRuta('usuarios/listar'));
+  }
+
 
 }

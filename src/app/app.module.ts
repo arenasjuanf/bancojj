@@ -52,7 +52,7 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
     ListaDinamicaComponent,
     ConsignacionesComponent,
     MovimientosComponent,
-    CrearUsuariosComponent,
+    CrearUsuariosComponent
   ],
 
   imports: [

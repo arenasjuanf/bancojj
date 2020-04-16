@@ -30,14 +30,9 @@ export class LoginComponent implements OnInit {
     this.appService.pageTitle = 'Inicia Sesión';
     this.fondo = this.setFondo();
     this.initForm();
-    console.log('sesion: ',this.adminService.checkearSesion());
+    
   }
 
-  credentials = {
-    email: '',
-    password: '',
-    rememberMe: false
-  };
 
   ngOnInit() {
   }
@@ -48,7 +43,9 @@ export class LoginComponent implements OnInit {
     const clave = this.formulario.get('clave').value;
     console.log(usuario,clave)
     this.adminService.iniciarSesion(usuario,clave).subscribe(result => {
-      this.openSnackBar(result['msg'] ? result['msg'] : 'Ingreso Corrrecto' , '!')
+      if(result){
+        this.openSnackBar(result['msg'] ? result['msg'] : 'Ingreso Corrrecto' , '!')
+      }
       if (result['success']) {
         localStorage.setItem('logged', 'true');
         localStorage.setItem('datosUsuario', JSON.stringify(result));
