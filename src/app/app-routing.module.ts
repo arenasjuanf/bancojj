@@ -48,7 +48,7 @@ const routes: Routes = [
     }]
   }, {
     path: '', component: Layout2Component, children: [{
-      path: 'movimientos', component: MovimientosComponent
+      path: 'movimientos/:id', component: MovimientosComponent
     }]
   },
   { path: 'login', component: LoginComponent },

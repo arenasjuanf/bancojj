@@ -1,3 +1,3 @@
-<app-lista-dinamica [keysFilter]="searchKeys" [propertiesForm]="formProperties" [title]="listTitle"
+<app-lista-dinamica *ngIf="mostrarLista" [dataTable]="accountData" [propertiesForm]="formProperties" [title]="listTitle"
   [propertiesTable]="tableProperties" (formularioValue)="filterSearchForm($event)">
 </app-lista-dinamica>

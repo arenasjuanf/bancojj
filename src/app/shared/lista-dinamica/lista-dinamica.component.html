@@ -3,29 +3,25 @@
 </h4>
 <div class="ui-bordered px-4 pt-4 mb-4">
   <form class="form-row align-items-center" [formGroup]="formFilter" (ngSubmit)="searchFilter()">
-    <div class="col-md mb-4" *ngIf="propertiesForm[0] === 'rol'">
-      <label class="form-label">{{ propertiesForm[0] | titlecase }}</label>
-      <select class="custom-select" [formControlName]="propertiesForm[0]">
-        <option *ngFor="let item of ['Any', 'User', 'Author', 'Staff', 'Admin']" [value]="item">{{item}}</option>
-      </select>
-    </div>
-    <div class="col-md mb-4" *ngIf="propertiesForm[0] === 'monto'">
-      <label class="form-label">{{ propertiesForm[0] | titlecase }}</label>
-      <input type="number" class="form-control" [formControlName]="propertiesForm[0]">
-    </div>
-    <div class="col-md mb-4">
-      <label class="form-label">{{ propertiesForm[1] | titlecase }}</label>
-      <select class="custom-select" formControlName="estado">
+    <div [class]="'col-md ' + input['clase']" *ngFor="let input of structureForm">
+      <label *ngIf="input['input'] !== 'boton'" class="form-label">{{ deleteUnderscore(input['propiedad']) | titlecase }}</label>
+      <select *ngIf="input['input'] === 'select-estado'" class="custom-select" [formControlName]="input['propiedad']">
         <option *ngFor="let item of status" [value]="item.value">{{item.viewValue}}</option>
       </select>
-    </div>
-    <div class="col-md mb-4">
-      <label class="form-label">{{ propertiesForm[2] | titlecase }}</label>
-      <custom-daterange-picker formControlName="fecha"></custom-daterange-picker>
-    </div>
-    <div class="col-md col-xl-2 mb-4">
-      <label class="form-label d-none d-md-block">&nbsp;</label>
-      <button type="submit" class="btn btn-secondary btn-block">Buscar</button>
+      <select *ngIf="input['input'] === 'select-rol'" class="custom-select" [formControlName]="input['propiedad']">
+        <option *ngFor="let item of ['Any', 'User', 'Author', 'Staff', 'Admin']" [value]="item">{{item}}</option>
+      </select>
+      <input *ngIf="input['input'] === 'monto'" type="number" class="form-control"
+        [formControlName]="input['propiedad']">
+      <input *ngIf="input['input'] === 'saldo_Actual'" type="number" class="form-control"
+        [formControlName]="input['propiedad']">
+      <input *ngIf="input['input'] === 'saldo_anterior'" type="number" class="form-control"
+        [formControlName]="input['propiedad']">
+      <custom-daterange-picker *ngIf="input['input'] === 'input-fecha'" [formControlName]=" input['propiedad']">
+      </custom-daterange-picker>
+      <label class="form-label d-none d-md-block" *ngIf="input['input'] === 'boton'">&nbsp;</label>
+      <button *ngIf="input['input'] === 'boton'" type="submit"
+        class="btn btn-secondary btn-block">{{ input['propiedad'] }}</button>
     </div>
   </form>
 </div>
@@ -50,33 +46,17 @@
       <thead>
         <tr>
           <th *ngFor="let property of propertiesTable" class="text-nowrap cursor-pointer" (click)="setSort(property)">
-            {{ property | titlecase}}<i class="ion text-muted ml-2" *ngIf="sortBy == property"
+            {{ deleteUnderscore(property) | titlecase}}<i class="ion text-muted ml-2" *ngIf="sortBy == property"
               [ngClass]="'ion-md-arrow-' + (sortDesc ? 'down' : 'up')"></i>
           </th>
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let user of usersData">
-          <td class="align-middle" *ngFor="let valor of user">
-            {{ valor }}
+          <td (click)="accountSelected(user)" class="align-middle" *ngFor="let valor of user">
+            <span
+              [ngClass]="valor === 'Activo' ? 'badge badge-success' : (valor === 'Inactivo' ? 'badge badge-danger' : '')">{{ valor }}</span>
           </td>
-          <!-- <td class="align-middle">{{user['id']}}</td>
-          <td class="align-middle">{{user['nro_documento']}}</td>
-          <td class="align-middle">{{user['account']}}</td>
-          <td class="align-middle">{{user['email']}}</td>
-          <td class="align-middle">{{user['name']}}</td>
-          <td class="align-middle">{{user['fecha_creacion']}}</td>
-          <td class="align-middle">
-            <span *ngIf="user['role'] === 1">User</span>
-            <span *ngIf="user['role'] === 4">Admin</span>
-          </td>
-          <td class="align-middle">
-            <span class="badge badge-outline-success" *ngIf="user['status'] === 1">Activo</span>
-            <span class="badge badge-outline-danger" *ngIf="user['status'] === 2">Inactivo</span>
-          </td>
-          <td class="text-center text-nowrap align-middle">
-            <a>Ir a...</a>
-          </td> -->
         </tr>
       </tbody>
     </table>

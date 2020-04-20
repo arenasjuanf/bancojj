@@ -46,7 +46,7 @@
     "intl": "~1.2.5",
     "marked": "~0.7.0",
     "masonry-layout": "~4.2.1",
-    "moment": "~2.24.0",
+    "moment": "^2.24.0",
     "ng-block-ui": "~2.1.1",
     "ng-chartist": "~4.1.0",
     "ng2-archwizard": "~2.1.0",

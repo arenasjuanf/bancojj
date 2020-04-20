@@ -1,5 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-lista-dinamica',
@@ -8,378 +10,68 @@ import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms'
 })
 export class ListaDinamicaComponent implements OnInit {
 
-  @Input() keysFilter: Array<string>;//searchKeys = ['id', 'account', 'email', 'name']; Columnas a filtrar
+
+  constructor(private formBuilder: FormBuilder, private router: Router) {
+    this.formularioValue = new EventEmitter();
+  }
+
   @Input() propertiesForm: Array<string>;
   @Input() propertiesTable: Array<string>;
-  @Input() dataRenderizer: Array<object> = [];//datos de la consulta
+  @Input() dataTable: Array<object>;
   @Input() title: string;
   @Output() formularioValue: EventEmitter<FormGroup>;
-
   formFilter: FormGroup;
-  structureArrayData = [];
+  structureArrayData: Array<string> = [];
   status = [{
     value: 1, viewValue: 'Activo'
   }, {
     value: 0, viewValue: 'Inactivo'
-  }]
-
-  constructor(private formBuilder: FormBuilder) {
-    this.formularioValue = new EventEmitter();
-    this.loadData();
-    this.structureData();
-  }
+  }];
+  sortBy: string = 'id';
+  sortDesc: boolean = true;
+  perPage: number = 10;
+  filterVal: string = '';
+  currentPage: number = 1;
+  totalItems: number = 0;
+  usersData: object[] = [];
+  originalUsersData: object[] = [];
+  structureForm: Array<object> = [];
 
   ngOnInit(): void {
     this.configForm();
+    this.structureData();
   }
 
   configForm() {
     this.formFilter = this.formBuilder.group({});
     this.propertiesForm.forEach(property => {
       this.formFilter.addControl(property, new FormControl('', { validators: Validators.required }));
-    });
-  }
-
-  // Options
-  sortBy = 'id';
-  sortDesc = true;
-  perPage = 10;
-
-  filterVal = '';
-  currentPage = 1;
-  totalItems = 0;
-
-  usersData: object[] = [];
-  originalUsersData: object[] = [];
-
-  loadData() {
-    this.originalUsersData = [
-      {
-        "id": 3507,
-        "account": "gmay",
-        "email": "gmay@mail.com",
-        "name": "Goldie May",
-        "latestActivity": "05/23/2018",
-        "role": 1,
-        "status": 1
-      },
-      {
-        "id": 3508,
-        "account": "hballard",
-        "email": "hballard@mail.com",
-        "name": "Harper Ballard",
-        "latestActivity": "03/28/2018",
-        "role": 3,
-        "status": 1
-      },
-      {
-        "id": 3509,
-        "account": "sguzman",
-        "email": "sguzman@mail.com",
-        "name": "Stevens Guzman",
-        "latestActivity": "05/04/2018",
-        "role": 3,
-        "status": 3
-      },
-      {
-        "id": 3542,
-        "account": "mstokes",
-        "email": "mstokes@mail.com",
-        "name": "Mercer Stokes",
-        "latestActivity": "04/27/2018",
-        "role": 4,
-        "status": 1
-      },
-      {
-        "id": 3543,
-        "account": "lbarber",
-        "email": "lbarber@mail.com",
-        "name": "Lily Barber",
-        "latestActivity": "04/29/2018",
-        "role": 1,
-        "status": 2
-      },
-      {
-        "id": 3544,
-        "account": "mbenjamin",
-        "email": "mbenjamin@mail.com",
-        "name": "Morse Benjamin",
-        "latestActivity": "03/19/2018",
-        "role": 2,
-        "status": 2
-      },
-      {
-        "id": 3545,
-        "account": "ngay",
-        "email": "ngay@mail.com",
-        "name": "Nixon Gay",
-        "latestActivity": "05/31/2018",
-        "role": 3,
-        "status": 2
-      },
-      {
-        "id": 3546,
-        "account": "shenderson",
-        "email": "shenderson@mail.com",
-        "name": "Sweeney Henderson",
-        "latestActivity": "07/10/2018",
-        "role": 4,
-        "status": 2
-      },
-      {
-        "id": 3547,
-        "account": "etanner",
-        "email": "etanner@mail.com",
-        "name": "Edna Tanner",
-        "latestActivity": "06/22/2018",
-        "role": 4,
-        "status": 3
-      },
-      {
-        "id": 3548,
-        "account": "kstrickland",
-        "email": "kstrickland@mail.com",
-        "name": "Kaye Strickland",
-        "latestActivity": "04/28/2018",
-        "role": 3,
-        "status": 1
-      },
-      {
-        "id": 3549,
-        "account": "tcruz",
-        "email": "tcruz@mail.com",
-        "name": "Taylor Cruz",
-        "latestActivity": "07/14/2018",
-        "role": 2,
-        "status": 1
-      },
-      {
-        "id": 3550,
-        "account": "mlivingston",
-        "email": "mlivingston@mail.com",
-        "name": "Mullins Livingston",
-        "latestActivity": "04/17/2018",
-        "role": 4,
-        "status": 2
-      },
-      {
-        "id": 3551,
-        "account": "frichard",
-        "email": "frichard@mail.com",
-        "name": "Fitzgerald Richard",
-        "latestActivity": "03/17/2018",
-        "role": 2,
-        "status": 2
-      },
-      {
-        "id": 3552,
-        "account": "cduffy",
-        "email": "cduffy@mail.com",
-        "name": "Cain Duffy",
-        "latestActivity": "07/08/2018",
-        "role": 3,
-        "status": 1
-      },
-      {
-        "id": 3553,
-        "account": "fgrimes",
-        "email": "fgrimes@mail.com",
-        "name": "Frazier Grimes",
-        "latestActivity": "03/21/2018",
-        "role": 2,
-        "status": 3
-      },
-      {
-        "id": 3554,
-        "account": "wreed",
-        "email": "wreed@mail.com",
-        "name": "Ward Reed",
-        "latestActivity": "04/23/2018",
-        "role": 3,
-        "status": 3
-      },
-      {
-        "id": 3555,
-        "account": "lmontoya",
-        "email": "lmontoya@mail.com",
-        "name": "Latonya Montoya",
-        "latestActivity": "04/22/2018",
-        "role": 4,
-        "status": 3
-      },
-      {
-        "id": 3556,
-        "account": "sgilmore",
-        "email": "sgilmore@mail.com",
-        "name": "Small Gilmore",
-        "latestActivity": "07/25/2018",
-        "role": 1,
-        "status": 3
-      },
-      {
-        "id": 3507,
-        "account": "gmay",
-        "email": "gmay@mail.com",
-        "name": "Goldie May",
-        "latestActivity": "05/23/2018",
-        "role": 1,
-        "status": 1
-      },
-      {
-        "id": 3508,
-        "account": "hballard",
-        "email": "hballard@mail.com",
-        "name": "Harper Ballard",
-        "latestActivity": "03/28/2018",
-        "role": 3,
-        "status": 1
-      },
-      {
-        "id": 3509,
-        "account": "sguzman",
-        "email": "sguzman@mail.com",
-        "name": "Stevens Guzman",
-        "latestActivity": "05/04/2018",
-        "role": 3,
-        "status": 3
-      },
-      {
-        "id": 3542,
-        "account": "mstokes",
-        "email": "mstokes@mail.com",
-        "name": "Mercer Stokes",
-        "latestActivity": "04/27/2018",
-        "role": 4,
-        "status": 1
-      },
-      {
-        "id": 3543,
-        "account": "lbarber",
-        "email": "lbarber@mail.com",
-        "name": "Lily Barber",
-        "latestActivity": "04/29/2018",
-        "role": 1,
-        "status": 2
-      },
-      {
-        "id": 3544,
-        "account": "mbenjamin",
-        "email": "mbenjamin@mail.com",
-        "name": "Morse Benjamin",
-        "latestActivity": "03/19/2018",
-        "role": 2,
-        "status": 2
-      },
-      {
-        "id": 3545,
-        "account": "ngay",
-        "email": "ngay@mail.com",
-        "name": "Nixon Gay",
-        "latestActivity": "05/31/2018",
-        "role": 3,
-        "status": 2
-      },
-      {
-        "id": 3546,
-        "account": "shenderson",
-        "email": "shenderson@mail.com",
-        "name": "Sweeney Henderson",
-        "latestActivity": "07/10/2018",
-        "role": 4,
-        "status": 2
-      },
-      {
-        "id": 3547,
-        "account": "etanner",
-        "email": "etanner@mail.com",
-        "name": "Edna Tanner",
-        "latestActivity": "06/22/2018",
-        "role": 4,
-        "status": 3
-      },
-      {
-        "id": 3548,
-        "account": "kstrickland",
-        "email": "kstrickland@mail.com",
-        "name": "Kaye Strickland",
-        "latestActivity": "04/28/2018",
-        "role": 3,
-        "status": 1
-      },
-      {
-        "id": 3549,
-        "account": "tcruz",
-        "email": "tcruz@mail.com",
-        "name": "Taylor Cruz",
-        "latestActivity": "07/14/2018",
-        "role": 2,
-        "status": 1
-      },
-      {
-        "id": 3550,
-        "account": "mlivingston",
-        "email": "mlivingston@mail.com",
-        "name": "Mullins Livingston",
-        "latestActivity": "04/17/2018",
-        "role": 4,
-        "status": 2
-      },
-      {
-        "id": 3551,
-        "account": "frichard",
-        "email": "frichard@mail.com",
-        "name": "Fitzgerald Richard",
-        "latestActivity": "03/17/2018",
-        "role": 2,
-        "status": 2
-      },
-      {
-        "id": 3552,
-        "account": "cduffy",
-        "email": "cduffy@mail.com",
-        "name": "Cain Duffy",
-        "latestActivity": "07/08/2018",
-        "role": 3,
-        "status": 1
-      },
-      {
-        "id": 3553,
-        "account": "fgrimes",
-        "email": "fgrimes@mail.com",
-        "name": "Frazier Grimes",
-        "latestActivity": "03/21/2018",
-        "role": 2,
-        "status": 3
-      },
-      {
-        "id": 3554,
-        "account": "wreed",
-        "email": "wreed@mail.com",
-        "name": "Ward Reed",
-        "latestActivity": "04/23/2018",
-        "role": 3,
-        "status": 3
-      },
-      {
-        "id": 3555,
-        "account": "lmontoya",
-        "email": "lmontoya@mail.com",
-        "name": "Latonya Montoya",
-        "latestActivity": "04/22/2018",
-        "role": 4,
-        "status": 3
-      },
-      {
-        "id": 3556,
-        "account": "sgilmore",
-        "email": "sgilmore@mail.com",
-        "name": "Small Gilmore",
-        "latestActivity": "07/25/2018",
-        "role": 1,
-        "status": 3
+      const object = {
+        clase: 'mb-' + (this.propertiesForm.length === 4 ? '3' : '4'),
+        propiedad: property
       }
-    ];
-    //this.update();
+      switch (property) {
+        case 'estado':
+          object['input'] = 'select-estado';
+          break;
+        case 'rol':
+          object['input'] = 'select-rol';
+          break;
+        case 'fecha':
+          object['input'] = 'input-fecha';
+          break;
+        default:
+          object['input'] = property;
+          break;
+      }
+      this.structureForm.push(object);
+    });
+    const boton = {
+      clase: 'mb-' + (this.propertiesForm.length === 4 ? '3' : '4'),
+      propiedad: 'Buscar',
+      input: 'boton'
+    }
+    this.structureForm.push(boton);
   }
 
   get totalPages() {
@@ -395,23 +87,25 @@ export class ListaDinamicaComponent implements OnInit {
 
   filter(data) {
     const filter = this.filterVal.toLowerCase();
-    return !filter ?
-      data.slice(0) :
-      data.filter(d => {
-        return Object.keys(d)
-          .filter(k => this.keysFilter.includes(k))
-          .map(k => String(d[k]))
-          .join('|')
-          .toLowerCase()
-          .indexOf(filter) !== -1 || !filter;
+    if (!filter) {
+      return data.slice(0);
+    } else {
+      let array = [];
+      data.forEach(item => {
+        const resultado = item.filter(k => {
+          k = typeof k === 'number' ? k + '' : k
+          return k.toLowerCase().indexOf(filter) > -1
+        });
+        resultado.length > 0 ? array.push(item) : ''
       });
+      return array;
+    }
   }
 
   sort(data) {
     data.sort((a: any, b: any) => {
       a = typeof (a[this.sortBy]) === 'string' ? a[this.sortBy].toUpperCase() : a[this.sortBy];
       b = typeof (b[this.sortBy]) === 'string' ? b[this.sortBy].toUpperCase() : b[this.sortBy];
-
       if (a < b) { return this.sortDesc ? 1 : -1; }
       if (a > b) { return this.sortDesc ? -1 : 1; }
       return 0;
@@ -421,7 +115,6 @@ export class ListaDinamicaComponent implements OnInit {
   paginate(data) {
     const perPage = parseInt(String(this.perPage), 10);
     const offset = (this.currentPage - 1) * perPage;
-
     return data.slice(offset, offset + perPage);
   }
 
@@ -432,14 +125,13 @@ export class ListaDinamicaComponent implements OnInit {
     } else {
       this.sortDesc = !this.sortDesc;
     }
-
     this.currentPage = 1;
     this.update();
   }
 
   searchFilter() {
     if (this.formFilter.valid) {
-      this.formularioValue.emit(this.formFilter);
+      this.formularioValue.emit(this.formFilter.value);
     } else {
       console.log("EL formualrio esta invalido");
     }
@@ -447,11 +139,38 @@ export class ListaDinamicaComponent implements OnInit {
 
   structureData() {
     this.structureArrayData = [];
-    this.originalUsersData.forEach((item: object) => {
+    this.dataTable.forEach((item: object) => {
       const valores = Object.values(item);
-      this.structureArrayData.push(valores);
+      this.structureArrayData.push(this.validateDate(valores));
     });
     this.update();
+  }
+
+  accountSelected(account) {
+    if (this.title === 'Cuentas') {
+      this.router.navigateByUrl('movimientos/' + account[0]);
+    }
+  }
+
+  validateDate(values) {
+    return values.map((value, index) => {
+      if (!isNaN((new Date(value)).getTime()) && typeof value !== 'number') {
+        return moment(value).locale('es').format('LLL');
+      }
+      value = this.validateState(index, value);
+      return value;
+    });
+  }
+
+  validateState(position, value) {
+    if (this.propertiesTable[position] === 'estado') {
+      return value === 1 ? 'Activo' : 'Inactivo';
+    }
+    return value
+  }
+
+  deleteUnderscore(value) {
+    return value.replace('_', ' ');
   }
 
 }

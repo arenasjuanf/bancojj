@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { CuentasService } from '../../shared/services/cuentas.service';
+import { AppService } from '../../app.service';
 
 @Component({
   selector: 'app-cuentas',
@@ -7,17 +9,39 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CuentasComponent implements OnInit {
 
-  searchKeys = ['id', 'nombre', 'saldo', 'estado']
   formProperties = ['rol', 'estado', 'fecha'];
-  tableProperties = ['id', 'usuario', 'nombre', 'saldo', 'estado', 'tipo_cuenta', 'creacion'];
-  listTitle = 'Cuentas bancarias';
+  tableProperties = ['id', 'usuario', 'nombre', 'saldo', 'estado', 'tipo_cuenta', 'creacion', 'modificada'];
+  listTitle = 'Cuentas';
+  accountData = [];
+  mostrarLista: boolean = false;
 
-  constructor() { }
+  constructor(private cuentasService: CuentasService, private appService: AppService) {
+    this.appService.pageTitle = this.listTitle + ' - Banco WD';
+  }
 
-  ngOnInit(): void { }
+  ngOnInit(): void {
+    this.obtenerCuentas();
+  }
 
   filterSearchForm(evento) {
     console.log("Eventoooooo ", evento);
+  }
+
+  obtenerCuentas() {
+    this.cuentasService.obtenerCuentas('listar').subscribe(cuentas => {
+      if (cuentas['success']) {
+        this.accountData = cuentas['mensaje'];
+        this.accountData.map(cuenta => {
+          delete cuenta['password'];
+        });
+      } else {
+        //console.log("Cuentas ", cuentas);
+      }
+      this.mostrarLista = true;
+    }, error => {
+      console.log("Error ", error);
+      this.mostrarLista = true;
+    });
   }
 
 }
