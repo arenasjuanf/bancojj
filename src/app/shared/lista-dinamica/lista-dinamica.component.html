@@ -4,21 +4,12 @@
 <div class="ui-bordered px-4 pt-4 mb-4">
   <form class="form-row align-items-center" [formGroup]="formFilter" (ngSubmit)="searchFilter()">
     <div [class]="'col-md ' + input['clase']" *ngFor="let input of structureForm">
-      <label *ngIf="input['input'] !== 'boton'" class="form-label">{{ deleteUnderscore(input['propiedad']) | titlecase }}</label>
+      <label *ngIf="input['input'] !== 'boton'"
+        class="form-label">{{ deleteUnderscore(input['propiedad']) | titlecase }}</label>
       <select *ngIf="input['input'] === 'select-estado'" class="custom-select" [formControlName]="input['propiedad']">
         <option *ngFor="let item of status" [value]="item.value">{{item.viewValue}}</option>
       </select>
-      <select *ngIf="input['input'] === 'select-rol'" class="custom-select" [formControlName]="input['propiedad']">
-        <option *ngFor="let item of ['Any', 'User', 'Author', 'Staff', 'Admin']" [value]="item">{{item}}</option>
-      </select>
-      <input *ngIf="input['input'] === 'monto'" type="number" class="form-control"
-        [formControlName]="input['propiedad']">
-      <input *ngIf="input['input'] === 'saldo_Actual'" type="number" class="form-control"
-        [formControlName]="input['propiedad']">
-      <input *ngIf="input['input'] === 'saldo_anterior'" type="number" class="form-control"
-        [formControlName]="input['propiedad']">
-      <custom-daterange-picker *ngIf="input['input'] === 'input-fecha'" [formControlName]=" input['propiedad']">
-      </custom-daterange-picker>
+      <input *ngIf="input['mostrar']" type="text" class="form-control" [formControlName]="input['propiedad']">
       <label class="form-label d-none d-md-block" *ngIf="input['input'] === 'boton'">&nbsp;</label>
       <button *ngIf="input['input'] === 'boton'" type="submit"
         class="btn btn-secondary btn-block">{{ input['propiedad'] }}</button>

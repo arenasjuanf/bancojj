@@ -20,4 +20,8 @@ export class CuentasService {
     return this.urlBase + this.path + extension;
   }
 
+  filtrar(extension, values) {
+    return this.http.post(this.construirUrl(extension), values);
+  }
+
 }

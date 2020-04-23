@@ -1,5 +1,5 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
+import { Component, OnInit, Input, Output, EventEmitter, SimpleChanges } from '@angular/core';
+import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import * as moment from 'moment';
 
@@ -23,9 +23,9 @@ export class ListaDinamicaComponent implements OnInit {
   formFilter: FormGroup;
   structureArrayData: Array<string> = [];
   status = [{
-    value: 1, viewValue: 'Activo'
+    value: '1', viewValue: 'Activo'
   }, {
-    value: 0, viewValue: 'Inactivo'
+    value: '0', viewValue: 'Inactivo'
   }];
   sortBy: string = 'id';
   sortDesc: boolean = true;
@@ -39,13 +39,12 @@ export class ListaDinamicaComponent implements OnInit {
 
   ngOnInit(): void {
     this.configForm();
-    this.structureData();
   }
 
   configForm() {
     this.formFilter = this.formBuilder.group({});
     this.propertiesForm.forEach(property => {
-      this.formFilter.addControl(property, new FormControl('', { validators: Validators.required }));
+      this.formFilter.addControl(property, new FormControl(''));
       const object = {
         clase: 'mb-' + (this.propertiesForm.length === 4 ? '3' : '4'),
         propiedad: property
@@ -54,14 +53,9 @@ export class ListaDinamicaComponent implements OnInit {
         case 'estado':
           object['input'] = 'select-estado';
           break;
-        case 'rol':
-          object['input'] = 'select-rol';
-          break;
-        case 'fecha':
-          object['input'] = 'input-fecha';
-          break;
         default:
           object['input'] = property;
+          object['mostrar'] = true;
           break;
       }
       this.structureForm.push(object);
@@ -135,6 +129,11 @@ export class ListaDinamicaComponent implements OnInit {
     } else {
       console.log("EL formualrio esta invalido");
     }
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    this.structureData();
+
   }
 
   structureData() {

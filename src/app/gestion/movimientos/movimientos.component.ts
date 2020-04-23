@@ -10,7 +10,7 @@ import { AppService } from '../../app.service';
 })
 export class MovimientosComponent implements OnInit {
 
-  formProperties = ['monto', 'saldo_Actual', 'saldo_anterior', 'fecha'];
+  formProperties = ['monto', 'saldo_Actual', 'saldo_anterior'];
   tableProperties = ['id', 'monto', 'saldo_anterior', 'saldo_Actual', 'creador', 'cuenta', 'transaccion', 'creacion', 'modificado'];
   listTitle = 'Movimientos';
   mostrarLista: boolean = false;
@@ -33,8 +33,24 @@ export class MovimientosComponent implements OnInit {
   ngOnInit() {
   }
 
-  filterSearch(evento) {
-    console.log("Eventoooooo ", evento);
+  filterSearch(data) {
+    const valores = {
+      monto: ['monto', 'like', '%' + data['monto'] + '%'],
+      saldo_Actual: ['saldo_Actual', '=', data['saldo_Actual']],
+      saldo_anterior: ['saldo_anterior', '=', data['saldo_anterior'] + ''],
+    }
+    const keys = Object.keys(valores);
+    let dataQuery = {};
+    keys.forEach(key => {
+      if (data[key] && data[key].length > 0) {
+        dataQuery[key] = valores[key];
+      }
+    });
+    this.movementsService.filtrar('filter', dataQuery).subscribe(respuesta => {
+      if (respuesta['success']) {
+        this.movementsData = respuesta['mensaje'];
+      }
+    });
   }
 
   resultAccountSeledtedList(id) {
