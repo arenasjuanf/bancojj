@@ -42,7 +42,7 @@
           </th>
         </tr>
       </thead>
-      <tbody>
+      <tbody *ngIf="usersData.length">
         <tr *ngFor="let user of usersData">
           <td (click)="accountSelected(user)" class="align-middle" *ngFor="let valor of user">
             <span
@@ -51,6 +51,9 @@
         </tr>
       </tbody>
     </table>
+    <div class="no-hay-datos" *ngIf="!usersData.length">
+      No hay datos...
+    </div>
   </div>
   <div class="card-body py-0">
     <div class="row">
@@ -65,3 +68,4 @@
     </div>
   </div>
 </div>
+<app-spinner></app-spinner>

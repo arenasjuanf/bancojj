@@ -1,3 +1,40 @@
-<h4 class="font-weight-bold py-3 mb-4">Home</h4>
-<p>This page is an example of basic layout. For more options use <strong>Angular starter template generator</strong> in the docs.</p>
-<p><button class="btn btn-primary btn-lg">Button</button></p>
+<div class="container-m-nx container-m-ny bg-white container-p-x py-4 mb-0">
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <div style="display: flex; align-items: center;">
+      <h2 class="font-weight-light mb-2 mr-2">Estadisticas generales</h2>
+      <div class="badge badge-success font-weight-bold">Actualizadas</div>
+    </div>
+  </div>
+</div>
+<hr class="container-m-nx border-light mt-0 mb-4">
+<div class="row">
+  <div class="col-sm-6">
+    <div class="card mb-4">
+      <h5 class="card-header with-elements border-0 pb-0">
+        <span class="card-header-title">Movimientos</span>
+      </h5>
+      <div class="mt-5">
+        <div style="height:150px; display: flex; justify-content: center;">
+          <canvas baseChart height="150" [datasets]="dataGraphOne" [labels]="arrayMonths" [options]="optionsGraphOne"
+            [chartType]="'line'" [colors]="colorsGraphOne">
+          </canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-6">
+    <div class="card mb-4">
+      <h5 class="card-header with-elements border-0 pb-0">
+        <span class="card-header-title">Cuentas</span>
+      </h5>
+      <div class="mt-5">
+        <div style="height:150px; display: flex; justify-content: center;">
+          <canvas baseChart height="150" [datasets]="dataGraphTwo" [labels]="arrayMonths" [options]="optionsGraphTwo"
+            [chartType]="'bar'" [colors]="colorsGraphTwo">
+          </canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<app-spinner></app-spinner>

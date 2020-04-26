@@ -6,6 +6,7 @@ import { AdministradorService } from '../../shared/services/administrador.servic
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { LogInModel } from './modelo-login';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-login',
@@ -17,7 +18,6 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 export class LoginComponent implements OnInit {
   fondo: any;
   formulario: FormGroup;
-  loginService: LogInModel = new LogInModel();
 
   constructor(
     private appService: AppService,
@@ -25,12 +25,12 @@ export class LoginComponent implements OnInit {
     private sanitizer: DomSanitizer,
     private adminService: AdministradorService,
     private _rxFormBuilder: FormBuilder,
-    private _snackBar: MatSnackBar
+    private _snackBar: MatSnackBar,
+    private sppiner: NgxSpinnerService,
     ) {
     this.appService.pageTitle = 'Inicia Sesión';
     this.fondo = this.setFondo();
     this.initForm();
-    console.log('sesion: ',this.adminService.checkearSesion());
   }
 
   credentials = {
@@ -43,18 +43,19 @@ export class LoginComponent implements OnInit {
   }
 
   signIn(){
-    //this.router.navigateByUrl('');
+    this.sppiner.show();
     const usuario = this.formulario.get('usuario').value;
     const clave = this.formulario.get('clave').value;
-    console.log(usuario,clave)
     this.adminService.iniciarSesion(usuario,clave).subscribe(result => {
       this.openSnackBar(result['msg'] ? result['msg'] : 'Ingreso Corrrecto' , '!')
       if (result['success']) {
         localStorage.setItem('logged', 'true');
-        localStorage.setItem('datosUsuario', JSON.stringify(result));
+        localStorage.setItem('datosUsuario', JSON.stringify(result['usuario']));
         this.router.navigateByUrl('/');
       }
+      this.sppiner.hide();
     }, error => {
+      this.sppiner.hide();
       console.log('errorsini: ', error);
     })
 

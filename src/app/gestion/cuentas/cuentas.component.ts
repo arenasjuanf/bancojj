@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CuentasService } from '../../shared/services/cuentas.service';
 import { AppService } from '../../app.service';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-cuentas',
@@ -13,9 +14,12 @@ export class CuentasComponent implements OnInit {
   tableProperties = ['id', 'usuario', 'nombre', 'saldo', 'estado', 'tipo_cuenta', 'creacion', 'modificada'];
   listTitle = 'Cuentas';
   accountData: Array<object> = [];
-  mostrarLista: boolean = false;
 
-  constructor(private cuentasService: CuentasService, private appService: AppService) {
+  constructor(
+    private cuentasService: CuentasService,
+    private appService: AppService,
+    private sppiner: NgxSpinnerService,
+  ) {
     this.appService.pageTitle = this.listTitle + ' - Banco WD';
   }
 
@@ -24,6 +28,7 @@ export class CuentasComponent implements OnInit {
   }
 
   filterSearchForm(data) {
+    this.seeSpinner();
     const valores = {
       nombre: ['nombre', 'like', '%' + data['nombre'] + '%'],
       estado: ['estado', '=', data['estado']],
@@ -43,22 +48,35 @@ export class CuentasComponent implements OnInit {
           delete cuenta['password'];
         });
       }
+      this.closeSpinner();
+    }, error => {
+      console.log("Error ", error);
+      this.closeSpinner();
     });
   }
 
   obtenerCuentas() {
+    this.seeSpinner();
     this.cuentasService.obtenerCuentas('listar').subscribe(cuentas => {
       if (cuentas['success']) {
         cuentas['mensaje'].map(cuenta => {
           delete cuenta['password'];
         });
         this.accountData = cuentas['mensaje'];
-      } else {
-        //console.log("Cuentas ", cuentas);
       }
+      this.closeSpinner();
     }, error => {
       console.log("Error ", error);
+      this.closeSpinner();
     });
+  }
+
+  seeSpinner() {
+    this.sppiner.show();
+  }
+
+  closeSpinner() {
+    this.sppiner.hide();
   }
 
 }

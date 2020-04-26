@@ -23,4 +23,8 @@ export class MovimientosService {
     return this.http.post(this.construirUrl(extension), values);
   }
 
+  listarEstadistica(extension) {
+    return this.http.get(this.construirUrl(extension))
+  }
+
 }

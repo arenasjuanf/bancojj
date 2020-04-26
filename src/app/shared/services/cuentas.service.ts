@@ -24,4 +24,8 @@ export class CuentasService {
     return this.http.post(this.construirUrl(extension), values);
   }
 
+  listarEstadistica(extension) {
+    return this.http.get(this.construirUrl(extension))
+  }
+
 }

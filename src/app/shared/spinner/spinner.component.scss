@@ -1,0 +1,10 @@
+ngx-spinner::ng-deep {
+  .overlay {
+    .loading-text {
+      display: flex;
+      flex-direction: column;
+      align-content: center;
+      justify-content: center;
+    }
+  }
+}

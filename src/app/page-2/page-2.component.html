@@ -1,3 +1,74 @@
-<h4 class="font-weight-bold py-3 mb-4">Page 2</h4>
-<p>This page is an example of basic layout. For more options use <strong>Angular starter template generator</strong> in the docs.</p>
-<p><button class="btn btn-primary btn-lg">Button</button></p>
+<div class="row">
+  <div class="col-xl-4">
+    <div class="card mb-4">
+      <div class="card-body">
+        <div class="media">
+          <img src="assets/img/avatars/5.png" alt class="ui-w-60 rounded-circle">
+          <div class="media-body pt-2 ml-3">
+            <h5 class="mb-2">{{ dataUser['nombres'] + ' ' + dataUser['apellidos']  }}</h5>
+            <div class="text-muted small">{{ dataUser['telefono'] }}</div>
+            <div class="mt-3">
+              <a href="" [ngClass]="dataUser['estado'] === 1 ? 'btn-success': 'btn-danger'"
+                class="btn btn-sm rounded-pill">{{ (dataUser['estado'] === 1 ? 'Activo': 'Inactivo') }}</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <hr class="border-light m-0">
+      <div class="card-body">
+        <div class="mb-2">
+          <span class="text-muted">Desde:</span>&nbsp;
+          {{ seeDate(dataUser['created_at'], 'LLL') }}
+        </div>
+        <div class="mb-2">
+          <span class="text-muted">Ciudad: </span>&nbsp;
+          <a href="javascript:void(0)" class="text-body">{{ dataUser['ciudad'] }}</a>
+        </div>
+        <div class='mb-4'>
+          <span class="text-muted">Phone:</span>&nbsp;
+          {{ dataUser['telefono'] }}
+        </div>
+      </div>
+    </div>
+    <div class="card mb-4">
+      <div class="card-header">Usuarios creados</div>
+      <div class="card-body">
+        <div class="media align-items-center pb-1 mb-3" *ngFor="let user of usersCreate">
+          <img [src]="user['foto']" class="d-block ui-w-40 rounded-circle">
+          <div class="media-body ml-3">
+            <a href="#" class="text-body">{{ user['nombres'] + ' ' + user['apellidos'] }}</a>
+            <div class="text-muted small">{{ user['usuario'] }}</div>
+          </div>
+          <a href="#" [ngClass]="user['estado'] === 1 ? 'btn-success' : 'btn-danger'"
+            class="btn btn-sm md-btn-flat d-block">{{ (user['estado'] === 1 ? 'Activo' : 'Inactivo') }}</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col">
+    <div class="card mb-12">
+      <div class="card-body">
+        <div class="card mb-12">
+          <h6 class="card-header with-elements">
+            <div class="card-header-title">Estadisticas</div>
+            <div class="card-header-elements ml-auto">
+              Total {{ usersCreate.length }}
+            </div>
+          </h6>
+          <div class="row no-gutters row-bordered">
+            <div class="col-md-12 col-lg-12 col-xl-12">
+              <div class="card-body">
+                <div style="height: 250px; display: flex; justify-content: center;">
+                  <canvas baseChart height="250" width="400" [datasets]="chart1Data" [labels]="arrayMonths"
+                    [options]="chart1Options" [chartType]="'line'" [colors]="chart1Colors">
+                  </canvas>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<app-spinner></app-spinner>

@@ -33,6 +33,10 @@ import { ConsignacionesComponent } from './gestion/consignaciones/consignaciones
 import { MovimientosComponent } from './gestion/movimientos/movimientos.component';
 import { CrearUsuariosComponent } from './gestion/crear-usuarios/crear-usuarios.component';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { NgxSpinnerModule } from "ngx-spinner";
+import { SpinnerComponent } from './shared/spinner/spinner.component';
+import { RxReactiveFormsModule } from '@rxweb/reactive-form-validators';
+import { ChartsModule as Ng2ChartsModule } from 'ng2-charts';
 
 // *******************************************************************************
 //
@@ -41,8 +45,6 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
   declarations: [
     AppComponent,
     NotFoundComponent,
-
-    // Pages
     HomeComponent,
     Page2Component,
     UsuariosComponent,
@@ -53,6 +55,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
     ConsignacionesComponent,
     MovimientosComponent,
     CrearUsuariosComponent,
+    SpinnerComponent,
   ],
 
   imports: [
@@ -67,6 +70,9 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
     ReactiveFormsModule,
     BrowserAnimationsModule,
     HttpClientModule,
+    NgxSpinnerModule,
+    RxReactiveFormsModule,
+    Ng2ChartsModule,
   ],
 
   providers: [

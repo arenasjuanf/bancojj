@@ -1,16 +1,17 @@
-<div class="clients-wrapper mr-5" [ngClass]="{'clients-sidebox-open': sideboxOpened}">
+<div class="clients-wrapper" [ngClass]="{'clients-sidebox-open': sideboxOpened}">
   <div [perfectScrollbar]="{ suppressScrollX: true, wheelPropagation: true }"
     class="clients-content clients-scroll container-p-x container-p-y">
     <h4 class="d-flex flex-wrap justify-content-between align-items-center font-weight-bold pt-2 mb-4">
       <div class="mb-2">Usuarios</div>
       <div class="mb-2" style="max-width: 200px;">
-        <input type="text" class="form-control" placeholder="Search">
+        <input type="text" [(ngModel)]="filterValue" (input)="currentPage = 1; update()" class="form-control"
+          placeholder="Buscar...">
       </div>
     </h4>
     <div class="table-responsive ui-bordered">
-      <table class="clients-table table table-hover m-0">
+      <table class="clients-table table table-hover m-0" *ngIf="clientsData.length">
         <tbody>
-          <tr *ngFor="let client of clientsData" [ngClass]="{'bg-light': selectedClient === client && sideboxOpened}"
+          <tr *ngFor="let client of dataSeeUsers" [ngClass]="{'bg-light': selectedClient === client && sideboxOpened}"
             (click)="selectClient(client)">
             <td class="align-middle py-3">
               <div class="media align-items-center">
@@ -78,4 +79,5 @@
       </div>
     </div>
   </div>
+  <app-spinner></app-spinner>
 </div>
