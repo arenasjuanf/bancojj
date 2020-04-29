@@ -32,4 +32,8 @@ export class userModel  {
 	@required({message: 'La clave es requerida'})
     clave: string = null;
 
+    @prop()
+	@required({message: 'El estado es requerida'})
+    estado: boolean = true;
+
 }
