@@ -20,7 +20,7 @@ export class UsuariosComponent implements OnInit {
   selected: any = null;
   sideboxOpened = false;
 
-  clientsData = [{
+  /*clientsData = [{
     avatar: '5-small.png',
     name: 'Nelle Maxwell',
     username: 'nmaxwell',
@@ -132,7 +132,7 @@ export class UsuariosComponent implements OnInit {
       { content: 'Eam facilis laboramus reprehendunt ei, ex esse fastidii per.', date: '3 days' },
       { content: 'Ea inani epicurei mea. No docendi antiopam quo, ad dicant viderer cotidieque vix. Ea mea dicat ludus, utroque explicari conclusionemque ius eu, in scaevola tractatos persecuti per.', date: '3 days' }
     ]
-  }];
+  }];*/
 
 
   arrayCuentas = [
