@@ -3,39 +3,42 @@
         Crear usuario
     </h6>
     <div class="card-body">
-        <form [formGroup]="formUser" (ngSubmit)="saveUser()">
+        <form [formGroup]="formulario" (ngSubmit)="crear()" *ngIf="formulario">
             <div class="form-row">
                 <div class="form-group col-md-6">
                     <label class="form-label">Nombres</label>
-                    <input formControlName="nombres" type="text" class="form-control" placeholder="Nombres">
+                    <input type="text" class="form-control" placeholder="Nombres" formControlName="nombres">
                 </div>
                 <div class="form-group col-md-6">
                     <label class="form-label">Apellidos</label>
-                    <input formControlName="apellidos" type="text" class="form-control" placeholder="Apellidos">
+                    <input type="text" class="form-control" placeholder="Apellidos" formControlName="apellidos">
                 </div>
                 <div class="form-group col-md-6">
                     <label class="form-label">Telefono</label>
-                    <input formControlName="telefono" type="tel" class="form-control" placeholder="Telefono">
+                    <input type="tel" class="form-control" placeholder="Telefono" formControlName="telefono">
                 </div>
                 <div class="form-group col-md-6">
                     <label class="form-label">Correo</label>
-                    <input formControlName="correo" required type="email" class="form-control" placeholder="Correo">
+                    <input  class="form-control" placeholder="Correo" formControlName="correo">
                 </div>
                 <div class="form-group col-md-6">
                     <label class="form-label">Documento</label>
-                    <input formControlName="documento" type="number" class="form-control" placeholder="number">
+                    <input type="number" class="form-control" placeholder="number" formControlName="documento">
                 </div>
                 <div class="form-group col-md-6">
                     <label class="form-label">Usuario</label>
-                    <input formControlName="usuario" type="text" class="form-control">
+                    <input type="text" class="form-control" formControlName="usuario" placeholder="usuario">
                 </div>
                 <div class="form-group col-md-6">
                     <label class="form-label">Contraseña</label>
-                    <input formControlName="clave" type="password" class="form-control">
+                    <input type="password" class="form-control" formControlName="clave">
                 </div>
             </div>
-            <button type="submit" class="btn btn-primary">Crear Usuario</button>
-            <button type="button" (click)="clearForm()" class="btn btn-danger">Cancelar</button>
+            
+            <button type="submit" class="btn btn-primary" [disabled]="!formulario.valid">Crear Usuario</button>
+            <button type="button" (click)="cancelar()" class="btn btn-danger">Cancelar</button>
+            
+            
         </form>
     </div>
 </div>

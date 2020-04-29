@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { RxFormGroup, RxFormBuilder } from '@rxweb/reactive-form-validators';
-import { CreateUserModel } from './modelo-crear-usuario';
-import { UsuariosService } from '../../shared/services/usuarios.service';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { userModel } from './user-model';
+import { AdministradorService } from 'src/app/shared/services/administrador.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
@@ -11,40 +11,58 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 })
 export class CrearUsuariosComponent implements OnInit {
 
-  formUser: RxFormGroup;
-  dataUser: object;
+  formulario: FormGroup;
+  userModel: userModel = new userModel();
 
-  constructor(private formBuilder: RxFormBuilder, private userService: UsuariosService, private snackBar: MatSnackBar) {
-    this.dataUser = JSON.parse(localStorage.getItem('datosUsuario'));
+  constructor(
+    private _formBuilder: FormBuilder,
+    private adminService: AdministradorService,
+    private _snackBar: MatSnackBar
+  ) { 
+   
   }
 
   ngOnInit() {
-    this.configForm();
+    this.initForm();
   }
 
-  configForm() {
-    this.formUser = <RxFormGroup>this.formBuilder.formGroup(new CreateUserModel());
-    this.formUser.get('usuario_creador').setValue(this.dataUser['id']);
+  initForm(){
+    this.formulario = this._formBuilder.group(this.userModel);
+    console.log('this.formulario: ', this.formulario);
   }
 
-  saveUser() {
-    if (this.formUser.valid) {
-      let datosGuardar = this.formUser.value;
-      datosGuardar['nro_documento'] = datosGuardar['nro_documento'] + '';
-      this.userService.crearUsuario('crear', datosGuardar).subscribe(respuesta => {
-        this.openSnackBar(respuesta['mensaje'],':)');
-      });
-    } else {
-      console.log("Formualrio in valido ", this.formUser.valid);
+  cancelar(){
+    this.formulario.reset();
+  }
+
+  crear(){
+
+    if(this.formulario.value){
+      const idUsuario = JSON.parse(localStorage.getItem('datosUsuario'))['usuario']['id'];
+      this.formulario.value.usuario_creador = idUsuario;
+      console.log(this.formulario.value);
+      this.adminService.crearUsuario(this.formulario.value).subscribe(
+        result => {
+          if(result){
+            if(result['success']){
+              this.openSnackBar(result['mensaje'] ? result['mensaje'] : 'Usuario creado' , '!');
+              this.cancelar();
+            } else {
+              this.openSnackBar(result['mensaje'] ? result['mensaje'] : 'Error' , '!');
+            }
+
+          }
+
+        },
+        error => {
+          this.openSnackBar(error.message, ':(');
+        }
+      )
     }
   }
 
-  clearForm() {
-    this.formUser.reset();
-  }
-
   openSnackBar(mensaje: string, action: string) {
-    this.snackBar.open(mensaje, action, {
+    this._snackBar.open(mensaje, action, {
       duration: 2000,
     });
   }

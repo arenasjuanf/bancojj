@@ -30,14 +30,9 @@ export class LoginComponent implements OnInit {
   ) {
     this.appService.pageTitle = 'Inicia Sesión';
     this.fondo = this.setFondo();
-    this.initForm();
+    this.initForm(); 
   }
 
-  credentials = {
-    email: '',
-    password: '',
-    rememberMe: false
-  };
 
   ngOnInit() {
   }
@@ -46,7 +41,11 @@ export class LoginComponent implements OnInit {
     this.sppiner.show();
     const usuario = this.formulario.get('usuario').value;
     const clave = this.formulario.get('clave').value;
-    this.adminService.iniciarSesion(usuario, clave).subscribe(result => {
+    console.log(usuario,clave)
+    this.adminService.iniciarSesion(usuario,clave).subscribe(result => {
+      if(result){
+        this.openSnackBar(result['msg'] ? result['msg'] : 'Ingreso Corrrecto' , '!')
+      }
       if (result['success']) {
         if (result['usuario']['fk_perfil'] === 1) {
           this.openSnackBar(result['msg'] ? result['msg'] : 'Bienvenido a Bnco WD', '!')

@@ -1,6 +1,5 @@
 import { Component, OnInit, HostBinding } from '@angular/core';
-import { UsuariosService } from '../../shared/services/usuarios.service';
-import { NgxSpinnerService } from 'ngx-spinner';
+import { AdministradorService } from 'src/app/shared/services/administrador.service';
 
 @Component({
   selector: 'app-usuarios',
@@ -12,7 +11,9 @@ import { NgxSpinnerService } from 'ngx-spinner';
 })
 export class UsuariosComponent implements OnInit {
 
-  constructor(private userService: UsuariosService, private spinner: NgxSpinnerService) { }
+  constructor(private adminService: AdministradorService) {
+    this.getUsers();
+  }
 
   @HostBinding('class') hostClasses = 'd-flex flex-grow-1 align-items-stretch h-100';
 
@@ -26,6 +27,31 @@ export class UsuariosComponent implements OnInit {
   sortDesc: boolean = true;
   perPage: number = 10;
   currentPage: number = 1;
+  arrayCuentas = [
+    {
+      content: 'cuenta 1',
+      date: '$100.000'
+    },
+    {
+      content: 'cuenta 2',
+      date: '$450.000'
+    }
+  ]
+
+  getUsers() {
+    this.adminService.listarUsuarios().subscribe(
+      result => {
+        console.log('resultadini: ', result);
+        if (result['mensaje']) {
+          this.clientsData = result['mensaje'];
+        }
+      },
+      error => {
+        console.log('errorsini: ', error);
+      }
+    )
+  }
+
 
   selectClient(client) {
     this.selectedClient = client;
@@ -36,27 +62,7 @@ export class UsuariosComponent implements OnInit {
     this.sideboxOpened = false;
   }
 
-  ngOnInit(): void {
-    this.getUsers();
-  }
-
-  getUsers() {
-    this.spinner.show();
-    this.userService.obtenerUsuarios('listar').subscribe(usuarios => {
-      if (usuarios['success']) {
-        this.clientsData = usuarios['mensaje'];
-        this.clientsData.forEach(usuario => {
-          const num = Math.floor(Math.random() * 12) + 1;
-          usuario['foto'] = num + '.png';
-        });
-        this.update();
-      }
-      this.spinner.hide();
-    }, error => {
-      this.spinner.hide();
-      console.log("Error listar ", error);
-    })
-  }
+  ngOnInit(): void { }
 
   filter(data) {
     const filter = this.filterValue.toLowerCase();
