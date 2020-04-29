@@ -10,6 +10,7 @@ import { AdministradorService } from 'src/app/shared/services/administrador.serv
     './usuarios.component.css']
 })
 export class UsuariosComponent implements OnInit {
+  clientsData: any;
 
   constructor( private adminService: AdministradorService) {
     this.getUsers();  
