@@ -37,6 +37,7 @@ import { NgxSpinnerModule } from "ngx-spinner";
 import { SpinnerComponent } from './shared/spinner/spinner.component';
 import { RxReactiveFormsModule } from '@rxweb/reactive-form-validators';
 import { ChartsModule as Ng2ChartsModule } from 'ng2-charts';
+import { AutenticadoGuard } from './shared/guards/autenticado.guard';
 
 // *******************************************************************************
 //
@@ -77,7 +78,8 @@ import { ChartsModule as Ng2ChartsModule } from 'ng2-charts';
 
   providers: [
     Title,
-    AppService
+    AppService,
+    AutenticadoGuard,
   ],
 
   bootstrap: [

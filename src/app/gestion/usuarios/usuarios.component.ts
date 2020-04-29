@@ -46,7 +46,7 @@ export class UsuariosComponent implements OnInit {
       if (usuarios['success']) {
         this.clientsData = usuarios['mensaje'];
         this.clientsData.forEach(usuario => {
-          const num = Math.floor(Math.random() * 12);
+          const num = Math.floor(Math.random() * 12) + 1;
           usuario['foto'] = num + '.png';
         });
         this.update();

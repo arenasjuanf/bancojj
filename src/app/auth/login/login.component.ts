@@ -21,13 +21,13 @@ export class LoginComponent implements OnInit {
 
   constructor(
     private appService: AppService,
-    private router: Router, 
+    private router: Router,
     private sanitizer: DomSanitizer,
     private adminService: AdministradorService,
     private _rxFormBuilder: FormBuilder,
     private _snackBar: MatSnackBar,
     private sppiner: NgxSpinnerService,
-    ) {
+  ) {
     this.appService.pageTitle = 'Inicia Sesión';
     this.fondo = this.setFondo();
     this.initForm();
@@ -42,16 +42,20 @@ export class LoginComponent implements OnInit {
   ngOnInit() {
   }
 
-  signIn(){
+  signIn() {
     this.sppiner.show();
     const usuario = this.formulario.get('usuario').value;
     const clave = this.formulario.get('clave').value;
-    this.adminService.iniciarSesion(usuario,clave).subscribe(result => {
-      this.openSnackBar(result['msg'] ? result['msg'] : 'Ingreso Corrrecto' , '!')
+    this.adminService.iniciarSesion(usuario, clave).subscribe(result => {
       if (result['success']) {
-        localStorage.setItem('logged', 'true');
-        localStorage.setItem('datosUsuario', JSON.stringify(result['usuario']));
-        this.router.navigateByUrl('/');
+        if (result['usuario']['fk_perfil'] === 1) {
+          this.openSnackBar(result['msg'] ? result['msg'] : 'Bienvenido a Bnco WD', '!')
+          localStorage.setItem('logged', 'true');
+          localStorage.setItem('datosUsuario', JSON.stringify(result['usuario']));
+          this.router.navigateByUrl('/inicio');
+        } else {
+          this.openSnackBar(result['msg'] ? result['msg'] : 'Plataforma solo para admisnitradores.', '!')
+        }
       }
       this.sppiner.hide();
     }, error => {
@@ -61,7 +65,7 @@ export class LoginComponent implements OnInit {
 
   }
 
-  setFondo(){
+  setFondo() {
     const num = Math.floor(Math.random() * 17);
     const fondo = `background-image: url('../assets/vendor/img/${num}.jpg');`;
     return this.sanitizer.bypassSecurityTrustStyle(fondo);
@@ -73,7 +77,7 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  initForm(){
+  initForm() {
     this.formulario = this._rxFormBuilder.group(new LogInModel());
   }
 
