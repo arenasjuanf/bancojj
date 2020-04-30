@@ -1,5 +1,7 @@
 import { Component, OnInit, HostBinding } from '@angular/core';
 import { AdministradorService } from 'src/app/shared/services/administrador.service';
+import { FormBuilder } from '@angular/forms';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-usuarios',
@@ -10,9 +12,10 @@ import { AdministradorService } from 'src/app/shared/services/administrador.serv
     './usuarios.component.css']
 })
 export class UsuariosComponent implements OnInit {
-  clientsData: any;
+  formulario: any;
 
-  constructor(private adminService: AdministradorService) {
+  constructor(private adminService: AdministradorService, private formBuilder: FormBuilder, private sppiner: NgxSpinnerService,) {
+    this.initForm();
     this.getUsers();
   }
 
@@ -27,16 +30,7 @@ export class UsuariosComponent implements OnInit {
   sortDesc: boolean = true;
   perPage: number = 10;
   currentPage: number = 1;
-  arrayCuentas = [
-    {
-      content: 'cuenta 1',
-      date: '$100.000'
-    },
-    {
-      content: 'cuenta 2',
-      date: '$450.000'
-    }
-  ]
+  arrayCuentas ;
 
   getUsers() {
     this.adminService.listarUsuarios().subscribe(
@@ -56,6 +50,22 @@ export class UsuariosComponent implements OnInit {
   selectClient(client) {
     this.selectedClient = client;
     this.sideboxOpened = true;
+    this.getCuentas();
+  }
+
+  getCuentas(){
+    this.sppiner.show();
+    this.adminService.getUserAccounts(this.selectedClient['id']).subscribe(
+      result => {
+        console.log('result get acc- ', result);
+        if (result['success']){
+          this.arrayCuentas = result['mensaje'];
+        }
+        this.sppiner.hide();
+      }, error => {
+        console.log('error: ', error);
+      }
+    )
   }
 
   closeSidebox() {
@@ -98,6 +108,35 @@ export class UsuariosComponent implements OnInit {
     const perPage = parseInt(String(this.perPage), 10);
     const offset = (this.currentPage - 1) * perPage;
     return data.slice(offset, offset + perPage);
+  }
+
+  initForm() {
+    this.formulario = this.formBuilder.group({
+      nombre: '',
+      clave: '',
+      saldo: 100000,
+      tipoCuenta: '',
+      idUsuario: '',
+      estado: ''
+    });
+  }
+
+  guardar(){
+    this.formulario.get('idUsuario').setValue(this.selectedClient['id']);
+    this.formulario.get('tipoCuenta').setValue(1);
+    this.formulario.get('estado').setValue(1);
+    console.log(this.formulario.value);
+
+    this.adminService.crearCuenta(this.formulario.value).subscribe(
+      result => {
+        console.log('result  crear cuenta: ', result);
+        if(result['success']){
+          this.formulario.reset();
+        }
+      }, error => {
+        console.log('error crear cuenta: ', error);
+      }
+    )
   }
 
 }
