@@ -20,7 +20,6 @@ export class UsuariosComponent implements OnInit {
 
   selectedClient: object = {};
   sideboxOpened = false;
-  clientsData: Array<object> = [];
   dataSeeUsers: Array<object> = [];
   filterValue: string = '';
   searchKeys = ['nombres', 'apellidos', 'correo', 'telefono'];
