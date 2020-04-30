@@ -1,6 +1,13 @@
 import { BrowserModule, Title } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatButtonModule } from '@angular/material/button';
+import { MatSelectModule } from '@angular/material/select';
+import { MatIconModule } from '@angular/material';
+
 
 // *******************************************************************************
 // NgBootstrap
@@ -74,6 +81,14 @@ import { AutenticadoGuard } from './shared/guards/autenticado.guard';
     NgxSpinnerModule,
     RxReactiveFormsModule,
     Ng2ChartsModule,
+    MatExpansionModule,
+    MatInputModule,
+    FormsModule,
+    ReactiveFormsModule,
+    MatFormFieldModule,
+    MatButtonModule,
+    MatSelectModule,
+    MatIconModule
   ],
 
   providers: [
