@@ -15,7 +15,6 @@ export class AdministradorService {
     private http: HttpClient,
     private router: Router,
   ) {
-    console.log('servicio inciado correctamente');
     this.iniciarSesion('narutousumaki', '12345');
   }
 

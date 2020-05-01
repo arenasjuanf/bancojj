@@ -18,46 +18,36 @@ export class CrearUsuariosComponent implements OnInit {
     private _formBuilder: FormBuilder,
     private adminService: AdministradorService,
     private _snackBar: MatSnackBar
-  ) { 
-   
-  }
+  ) { }
 
   ngOnInit() {
     this.initForm();
   }
 
-  initForm(){
+  initForm() {
     this.formulario = this._formBuilder.group(this.userModel);
-    console.log('this.formulario: ', this.formulario);
   }
 
-  cancelar(){
+  cancelar() {
     this.formulario.reset();
   }
 
-  crear(){
-
-    if(this.formulario.value){
+  crear() {
+    if (this.formulario.value) {
       const idUsuario = JSON.parse(localStorage.getItem('datosUsuario'))['usuario']['id'];
       this.formulario.value.usuario_creador = idUsuario;
-      console.log(this.formulario.value);
-      this.adminService.crearUsuario(this.formulario.value).subscribe(
-        result => {
-          if(result){
-            if(result['success']){
-              this.openSnackBar(result['mensaje'] ? result['mensaje'] : 'Usuario creado' , '!');
-              this.cancelar();
-            } else {
-              this.openSnackBar(result['mensaje'] ? result['mensaje'] : 'Error' , '!');
-            }
-
+      this.adminService.crearUsuario(this.formulario.value).subscribe(result => {
+        if (result) {
+          if (result['success']) {
+            this.openSnackBar(result['mensaje'] ? result['mensaje'] : 'Usuario creado', '!');
+            this.cancelar();
+          } else {
+            this.openSnackBar(result['mensaje'] ? result['mensaje'] : 'Error', '!');
           }
-
-        },
-        error => {
-          this.openSnackBar(error.message, ':(');
         }
-      )
+      }, error => {
+        this.openSnackBar(error.message, ':(');
+      });
     }
   }
 
