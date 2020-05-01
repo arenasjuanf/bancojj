@@ -41,7 +41,6 @@ export class LoginComponent implements OnInit {
     this.sppiner.show();
     const usuario = this.formulario.get('usuario').value;
     const clave = this.formulario.get('clave').value;
-    console.log(usuario,clave)
     this.adminService.iniciarSesion(usuario,clave).subscribe(result => {
       if(result){
         this.openSnackBar(result['msg'] ? result['msg'] : 'Ingreso Corrrecto' , '!')

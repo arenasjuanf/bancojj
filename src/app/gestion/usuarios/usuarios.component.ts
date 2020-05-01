@@ -14,7 +14,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 export class UsuariosComponent implements OnInit {
   formulario: any;
 
-  constructor(private adminService: AdministradorService, private formBuilder: FormBuilder, private sppiner: NgxSpinnerService,) {
+  constructor(private adminService: AdministradorService, private formBuilder: FormBuilder, private sppiner: NgxSpinnerService, ) {
     this.initForm();
     this.getUsers();
   }
@@ -23,27 +23,28 @@ export class UsuariosComponent implements OnInit {
 
   selectedClient: object = {};
   sideboxOpened = false;
-  dataSeeUsers: Array<object> = [];
+  clientsData: Array<object> = [];
+  dataFilter: Array<object> = [];
   filterValue: string = '';
-  searchKeys = ['nombres', 'apellidos', 'correo', 'telefono'];
+  searchKeys = ['nombres', 'apellidos', 'correo', 'telefono', 'nro_documento'];
   sortBy: string = 'id';
   sortDesc: boolean = true;
   perPage: number = 10;
   currentPage: number = 1;
-  arrayCuentas ;
+  arrayCuentas;
 
   getUsers() {
-    this.adminService.listarUsuarios().subscribe(
-      result => {
-        console.log('resultadini: ', result);
-        if (result['mensaje']) {
-          this.clientsData = result['mensaje'];
-        }
-      },
-      error => {
-        console.log('errorsini: ', error);
+    this.sppiner.show();
+    this.adminService.listarUsuarios().subscribe(result => {
+      if (result['mensaje']) {
+        this.clientsData = result['mensaje'];
+        this.dataFilter = result['mensaje'];
       }
-    )
+      this.sppiner.hide();
+    }, error => {
+      console.log('errorsini: ', error);
+      this.sppiner.hide();
+    });
   }
 
 
@@ -53,19 +54,17 @@ export class UsuariosComponent implements OnInit {
     this.getCuentas();
   }
 
-  getCuentas(){
+  getCuentas() {
     this.sppiner.show();
-    this.adminService.getUserAccounts(this.selectedClient['id']).subscribe(
-      result => {
-        console.log('result get acc- ', result);
-        if (result['success']){
-          this.arrayCuentas = result['mensaje'];
-        }
-        this.sppiner.hide();
-      }, error => {
-        console.log('error: ', error);
+    this.adminService.getUserAccounts(this.selectedClient['id']).subscribe(result => {
+      if (result['success']) {
+        this.arrayCuentas = result['mensaje'];
       }
-    )
+      this.sppiner.hide();
+    }, error => {
+      this.sppiner.hide();
+      console.log('error: ', error);
+    });
   }
 
   closeSidebox() {
@@ -89,9 +88,9 @@ export class UsuariosComponent implements OnInit {
   }
 
   update() {
-    const data = this.filter(this.clientsData);
+    const data = this.filter(this.dataFilter);
     this.sort(data);
-    this.dataSeeUsers = this.paginate(data);
+    this.clientsData = this.paginate(data);
   }
 
   sort(data) {
@@ -121,22 +120,18 @@ export class UsuariosComponent implements OnInit {
     });
   }
 
-  guardar(){
+  guardar() {
     this.formulario.get('idUsuario').setValue(this.selectedClient['id']);
     this.formulario.get('tipoCuenta').setValue(1);
     this.formulario.get('estado').setValue(1);
-    console.log(this.formulario.value);
-
-    this.adminService.crearCuenta(this.formulario.value).subscribe(
-      result => {
-        console.log('result  crear cuenta: ', result);
-        if(result['success']){
-          this.formulario.reset();
-        }
-      }, error => {
-        console.log('error crear cuenta: ', error);
+    this.adminService.crearCuenta(this.formulario.value).subscribe(result => {
+      if (result['success']) {
+        this.formulario.reset();
+        this.getCuentas();
       }
-    )
+    }, error => {
+      console.log('error crear cuenta: ', error);
+    });
   }
 
 }

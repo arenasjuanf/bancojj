@@ -17,22 +17,21 @@
               <div class="media align-items-center">
                 <img [src]="'assets/img/avatars/5.png'" class="d-block ui-w-40 rounded-circle" alt="">
                 <div class="media-body flex-basis-auto pl-3">
-                  <div>{{client.nombres+' '+client.apellidos }}</div>
-                  <div class="text-muted small">@{{client.correo}}</div>
+                  <div>{{client['nombres']+' '+client['apellidos'] }}</div>
+                  <div class="text-muted small">@{{client['correo']}}</div>
                 </div>
               </div>
             </td>
             <td class="align-middle py-3">
-              Documento: {{client.nro_documento}}
+              Documento: {{client['nro_documento']}}
             </td>
             <td class="align-middle py-3">
-              <div *ngIf="client.phone">{{client.telefono}}</div>
+              <div *ngIf="client['phone']">{{client['telefono']}}</div>
             </td>
             <td class="align-middle py-3">
-              <span *ngIf="client.estado">
-                <span class="badge badge-success" *ngIf="client.estado === 1">Activo</span>
-                <span class="badge badge-info" *ngIf="client.estado === 2">In progress</span>
-                <span class="badge badge-warning" *ngIf="client.estado === 3">Pending</span>
+              <span>
+                <span class="badge badge-success" *ngIf="client['estado'] === 1">Activo</span>
+                <span class="badge badge-danger" *ngIf="client['estado'] === 0">Inactivo</span>
               </span>
             </td>
           </tr>
@@ -48,10 +47,10 @@
       <div class="text-center p-4">
         <img [src]="'assets/img/avatars/5.png'" class="ui-w-100 rounded-circle mb-4" alt="">
         <h5 class="mb-1"><a href="javascript:void(0)"
-            class="text-body">{{selectedClient.nombres+' '+selectedClient.apellidos}}</a></h5>
-        <div class="text-muted small mb-2">@{{selectedClient.correo}}</div>
-        <div class="small mb-4" *ngIf="selectedClient.telefono">
-          <div *ngIf="selectedClient.phone">{{selectedClient.telefono}}</div>
+            class="text-body">{{selectedClient['nombres']+' '+selectedClient['apellidos']}}</a></h5>
+        <div class="text-muted small mb-2">{{selectedClient['correo']}}</div>
+        <div class="small mb-4" *ngIf="selectedClient['telefono']">
+          <div *ngIf="selectedClient['phone']">{{selectedClient['telefono']}}</div>
         </div>
       </div>
       <hr class="border-light m-0">
@@ -62,7 +61,7 @@
               Agregar Cuenta
             </mat-panel-title>
           </mat-expansion-panel-header>
-      
+
           <mat-form-field>
             <mat-label>Nombre</mat-label>
             <input matInput formControlName="nombre">
@@ -72,13 +71,14 @@
             <mat-label>clave</mat-label>
             <input matInput formControlName="clave">
           </mat-form-field>
-      
+
           <mat-form-field>
             <mat-label>Saldo</mat-label>
             <input matInput formControlName="saldo" type="number" min="100000">
           </mat-form-field>
 
-          <button mat-icon-button color="primary" (click)="guardar()" [disabled]="!formulario.value.nombre || !formulario.value.clave || !formulario.value.saldo ">
+          <button mat-icon-button color="primary" (click)="guardar()"
+            [disabled]="!formulario.value.nombre || !formulario.value.clave || !formulario.value.saldo ">
             <mat-icon>save</mat-icon>
           </button>
 
@@ -92,7 +92,7 @@
           <div *ngFor="let cuenta of arrayCuentas; let i = index" class="ui-bordered py-2 px-3"
             [ngClass]="{'mb-3': i !== (arrayCuentas.length - 1)}">
             {{cuenta.nombre}}
-            <div class="text-muted small mt-1">{{cuenta.saldo}}  &nbsp; | &nbsp; <a href="javascript:void(0)"
+            <div class="text-muted small mt-1">{{cuenta.saldo}} &nbsp; | &nbsp; <a href="javascript:void(0)"
                 class="text-muted">ver</a></div>
           </div>
         </div>
@@ -102,4 +102,3 @@
   </div>
   <app-spinner></app-spinner>
 </div>
-
