@@ -2,6 +2,7 @@ import { Component, OnInit, HostBinding } from '@angular/core';
 import { AdministradorService } from 'src/app/shared/services/administrador.service';
 import { FormBuilder } from '@angular/forms';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-usuarios',
@@ -14,7 +15,12 @@ import { NgxSpinnerService } from 'ngx-spinner';
 export class UsuariosComponent implements OnInit {
   formulario: any;
 
-  constructor(private adminService: AdministradorService, private formBuilder: FormBuilder, private sppiner: NgxSpinnerService, ) {
+  constructor(
+    private adminService: AdministradorService,
+    private formBuilder: FormBuilder,
+    private sppiner: NgxSpinnerService,
+    private router: Router,
+  ) {
     this.initForm();
     this.getUsers();
   }
@@ -132,6 +138,10 @@ export class UsuariosComponent implements OnInit {
     }, error => {
       console.log('error crear cuenta: ', error);
     });
+  }
+
+  irMovimientos(cuenta){
+    this.router.navigateByUrl('movimientos/' + cuenta['id']);
   }
 
 }
