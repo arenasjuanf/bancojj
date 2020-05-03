@@ -23,15 +23,15 @@ export class AdministradorService {
     return this.http.get(this.construirRuta(credenciales));
   }
 
-  checkearSesion(){
-    if(localStorage.getItem('logged') && localStorage.getItem('datosUsuario')){
+  checkearSesion() {
+    if (localStorage.getItem('logged') && localStorage.getItem('datosUsuario')) {
       return true;
     } else {
       return false;
     }
   }
 
-  cerrarSesion(){
+  cerrarSesion() {
     localStorage.setItem('logged', 'false');
     localStorage.removeItem('datosUsuario');
     this.router.navigateByUrl('/login');
@@ -41,7 +41,7 @@ export class AdministradorService {
     return this.urlBase + opcion;
   }
 
-  crearUsuario(datos: object){
+  crearUsuario(datos: object) {
     return this.http.post(this.construirRuta('usuarios/crear'), datos);
   }
 
@@ -49,13 +49,20 @@ export class AdministradorService {
     return this.http.post(this.construirRuta('cuentas/crear'), datos);
   }
 
-  listarUsuarios(){
+  listarUsuarios() {
     return this.http.get(this.construirRuta('usuarios/listar'));
   }
 
   getUserAccounts(idUser) {
-    return this.http.get(this.construirRuta('cuentas/listar/'+idUser));
+    return this.http.get(this.construirRuta('cuentas/listar/' + idUser));
   }
 
+  consignarCuenta(datos: object) {
+    return this.http.put(this.construirRuta('cuentas/consignar'), datos);
+  }
+
+  retirarCuenta(datos: object) {
+    return this.http.put(this.construirRuta('cuentas/retirar'), datos);
+  }
 
 }

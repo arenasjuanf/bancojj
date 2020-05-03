@@ -3,6 +3,8 @@ import { AdministradorService } from 'src/app/shared/services/administrador.serv
 import { FormBuilder } from '@angular/forms';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { Router } from '@angular/router';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-usuarios',
@@ -20,6 +22,7 @@ export class UsuariosComponent implements OnInit {
     private formBuilder: FormBuilder,
     private sppiner: NgxSpinnerService,
     private router: Router,
+    private _snackBar: MatSnackBar,
   ) {
     this.initForm();
     this.getUsers();
@@ -37,7 +40,7 @@ export class UsuariosComponent implements OnInit {
   sortDesc: boolean = true;
   perPage: number = 10;
   currentPage: number = 1;
-  arrayCuentas;
+  arrayCuentas: Array<object> = [];
 
   getUsers() {
     this.sppiner.show();
@@ -119,7 +122,7 @@ export class UsuariosComponent implements OnInit {
     this.formulario = this.formBuilder.group({
       nombre: '',
       clave: '',
-      saldo: 100000,
+      saldo: 10000,
       tipoCuenta: '',
       idUsuario: '',
       estado: ''
@@ -140,8 +143,55 @@ export class UsuariosComponent implements OnInit {
     });
   }
 
-  irMovimientos(cuenta){
+  irMovimientos(cuenta) {
     this.router.navigateByUrl('movimientos/' + cuenta['id']);
+  }
+
+  irConsignar(cuenta) {
+    this.openModal('Consignación ' + cuenta['nombre'], 'Ingrese cantidad...', 'consignar', cuenta['id'], 'consignarCuenta');
+  }
+
+  irRetirar(cuenta) {
+    this.openModal('Ingrese código', 'Ingrese...', 'retirar', cuenta['id'], 'retirarCuenta');
+  }
+
+  openSnackBar(mensaje: string, action: string) {
+    this._snackBar.open(mensaje, action, {
+      duration: 2000,
+    });
+  }
+
+  openModal(titulo: string, placeholder: string, tipoModal: string, idCuenta, metodoQuery: string) {
+    Swal.fire({
+      title: titulo,
+      input: 'text',
+      inputAttributes: {
+        autocapitalize: 'off',
+        placeholder: placeholder
+      },
+      showCancelButton: true,
+      confirmButtonText: 'Aceptar',
+      showLoaderOnConfirm: true,
+      cancelButtonText: 'Cancelar',
+      preConfirm: (login) => { },
+      allowOutsideClick: () => !Swal.isLoading()
+    }).then((result) => {
+      this.sppiner.show();
+      if (result.value) {
+        const datos = {
+          cuenta: idCuenta,
+          valor: result.value
+        }
+        this.adminService[metodoQuery](datos).subscribe(respuesta => {
+          console.log("Respuesta ", respuesta);
+          this.openSnackBar(respuesta['mensaje'], '!');
+          this.getCuentas();
+        }, error => {
+          this.openSnackBar('Error en la consignación.', '!');
+          this.sppiner.hide();
+        });
+      }
+    });
   }
 
 }

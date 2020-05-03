@@ -25,10 +25,6 @@ export class UsuariosService {
     return this.urlBase + this.path + extension;
   }
 
-  crearUsuario(extension, datos) {
-    return this.http.post(this.construirUrl(extension), datos);
-  }
-
   getUserCreate(extension) {
     return this.http.get(this.construirUrl(extension));
   }

@@ -18,7 +18,7 @@
                 <img [src]="'assets/img/avatars/5.png'" class="d-block ui-w-40 rounded-circle" alt="">
                 <div class="media-body flex-basis-auto pl-3">
                   <div>{{client['nombres']+' '+client['apellidos'] }}</div>
-                  <div class="text-muted small">@{{client['correo']}}</div>
+                  <div class="text-muted small">{{client['correo']}}</div>
                 </div>
               </div>
             </td>
@@ -54,49 +54,47 @@
         </div>
       </div>
       <hr class="border-light m-0">
-      <mat-accordion>
+      <mat-accordion *ngIf="selectedClient['estado'] !== 0">
         <mat-expansion-panel [formGroup]="formulario">
           <mat-expansion-panel-header>
             <mat-panel-title>
               Agregar Cuenta
             </mat-panel-title>
           </mat-expansion-panel-header>
-
           <mat-form-field>
             <mat-label>Nombre</mat-label>
             <input matInput formControlName="nombre">
           </mat-form-field>
-
           <mat-form-field>
             <mat-label>clave</mat-label>
             <input matInput formControlName="clave">
           </mat-form-field>
-
           <mat-form-field>
             <mat-label>Saldo</mat-label>
             <input matInput formControlName="saldo" type="number" min="100000">
           </mat-form-field>
-
           <button mat-icon-button color="primary" (click)="guardar()"
             [disabled]="!formulario.value.nombre || !formulario.value.clave || !formulario.value.saldo ">
             <mat-icon>save</mat-icon>
           </button>
-
-
         </mat-expansion-panel>
       </mat-accordion>
       <hr class="border-light m-0">
       <div class="p-4 text-center ">
         <h6 class="mb-3 mt-3">Cuentas</h6>
-        <div *ngIf="arrayCuentas">
+        <div *ngIf="arrayCuentas.length">
           <div *ngFor="let cuenta of arrayCuentas; let i = index" class="ui-bordered py-2 px-3"
             [ngClass]="{'mb-3': i !== (arrayCuentas.length - 1)}">
-            {{cuenta.nombre}}
-            <div class="text-muted small mt-1">{{cuenta.saldo}} &nbsp; | &nbsp; <a href="javascript:void(0)"
-                class="text-muted" (click)="irMovimientos(cuenta)" >ver</a></div>
+            {{cuenta['nombre']}} - {{cuenta['saldo']}} &nbsp;
+            <div class="text-muted small mt-1">
+              <a href="javascript:void(0)" class="text-muted" (click)="irMovimientos(cuenta)">Ver movimientos</a> |
+              &nbsp;
+              <a href="javascript:void(0)" class="text-muted" (click)="irRetirar(cuenta)">Retirar</a> | &nbsp;
+              <a href="javascript:void(0)" class="text-muted" (click)="irConsignar(cuenta)">Consignar</a>
+            </div>
           </div>
         </div>
-        <div *ngIf="!arrayCuentas" class="text-lighter my-4">No cuentas</div>
+        <div *ngIf="!arrayCuentas.length" class="text-lighter my-4">No hay cuentas</div>
       </div>
     </div>
   </div>

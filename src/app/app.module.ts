@@ -45,6 +45,7 @@ import { SpinnerComponent } from './shared/spinner/spinner.component';
 import { RxReactiveFormsModule } from '@rxweb/reactive-form-validators';
 import { ChartsModule as Ng2ChartsModule } from 'ng2-charts';
 import { AutenticadoGuard } from './shared/guards/autenticado.guard';
+import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 
 // *******************************************************************************
 //
@@ -88,7 +89,8 @@ import { AutenticadoGuard } from './shared/guards/autenticado.guard';
     MatFormFieldModule,
     MatButtonModule,
     MatSelectModule,
-    MatIconModule
+    MatIconModule,
+    SweetAlert2Module,
   ],
 
   providers: [
