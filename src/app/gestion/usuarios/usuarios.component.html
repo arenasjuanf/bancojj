@@ -15,7 +15,7 @@
             (click)="selectClient(client)">
             <td class="align-middle py-3">
               <div class="media align-items-center">
-                <img [src]="'assets/img/avatars/5.png'" class="d-block ui-w-40 rounded-circle" alt="">
+                <img [src]="'assets/img/logo_proyecto.png'" class="d-block ui-w-40 rounded-circle" alt="">
                 <div class="media-body flex-basis-auto pl-3">
                   <div>{{client['nombres']+' '+client['apellidos'] }}</div>
                   <div class="text-muted small">{{client['correo']}}</div>
@@ -30,8 +30,8 @@
             </td>
             <td class="align-middle py-3">
               <span>
-                <span class="badge badge-success" *ngIf="client['estado'] === 1">Activo</span>
-                <span class="badge badge-danger" *ngIf="client['estado'] === 0">Inactivo</span>
+                <span class="badge"
+                  [ngClass]="client['estado'] === 1 ? 'badge-success' : 'badge-danger'">{{ client['estado'] === 1 ? 'Activo' : 'Inactivo' }}</span>
               </span>
             </td>
           </tr>
@@ -45,7 +45,7 @@
     <div *ngIf="selectedClient" [perfectScrollbar]="{ suppressScrollX: true, wheelPropagation: true }"
       class="clients-scroll container-p-y">
       <div class="text-center p-4">
-        <img [src]="'assets/img/avatars/5.png'" class="ui-w-100 rounded-circle mb-4" alt="">
+        <img [src]="'assets/img/logo_proyecto.png'" class="ui-w-100 rounded-circle mb-4" alt="">
         <h5 class="mb-1"><a href="javascript:void(0)"
             class="text-body">{{selectedClient['nombres']+' '+selectedClient['apellidos']}}</a></h5>
         <div class="text-muted small mb-2">{{selectedClient['correo']}}</div>

@@ -5,6 +5,8 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import Swal from 'sweetalert2';
+import * as moment from 'moment';
+import { date } from '@rxweb/reactive-form-validators';
 
 @Component({
   selector: 'app-usuarios',
@@ -24,6 +26,7 @@ export class UsuariosComponent implements OnInit {
     private router: Router,
     private _snackBar: MatSnackBar,
   ) {
+    this.dataUser = JSON.parse(localStorage.getItem('datosUsuario'));
     this.initForm();
     this.getUsers();
   }
@@ -31,6 +34,7 @@ export class UsuariosComponent implements OnInit {
   @HostBinding('class') hostClasses = 'd-flex flex-grow-1 align-items-stretch h-100';
 
   selectedClient: object = {};
+  dataUser: object = {};
   sideboxOpened = false;
   clientsData: Array<object> = [];
   dataFilter: Array<object> = [];
@@ -41,6 +45,7 @@ export class UsuariosComponent implements OnInit {
   perPage: number = 10;
   currentPage: number = 1;
   arrayCuentas: Array<object> = [];
+  fechaActual = moment().format('YYYY-MM-DDTHH:mm:ss');
 
   getUsers() {
     this.sppiner.show();
@@ -180,16 +185,20 @@ export class UsuariosComponent implements OnInit {
       if (result.value) {
         const datos = {
           cuenta: idCuenta,
-          valor: result.value
+          valor: result.value,
+          fechaActual: moment().format('YYYY-MM-DDTHH:mm:ss'),
+          transaccion: (tipoModal === 'retirar' ? 2 : 3),
+          creador: this.dataUser['id']
         }
         this.adminService[metodoQuery](datos).subscribe(respuesta => {
-          console.log("Respuesta ", respuesta);
           this.openSnackBar(respuesta['mensaje'], '!');
           this.getCuentas();
         }, error => {
           this.openSnackBar('Error en la consignación.', '!');
           this.sppiner.hide();
         });
+      } else {
+        this.sppiner.hide();
       }
     });
   }
