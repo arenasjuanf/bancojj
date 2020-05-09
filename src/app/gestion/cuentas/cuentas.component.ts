@@ -11,7 +11,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 export class CuentasComponent implements OnInit {
 
   formProperties = ['nombre', 'estado', 'saldo'];
-  tableProperties = ['id', 'usuario', 'nombre', 'saldo', 'estado', 'tipo_cuenta', 'creacion', 'modificada'];
+  tableProperties = ['id', 'propietario', 'nombre', 'saldo', 'estado', 'tipo_cuenta', 'creacion', 'modificada'];
   listTitle = 'Cuentas';
   accountData: Array<object> = [];
 
@@ -31,7 +31,7 @@ export class CuentasComponent implements OnInit {
     this.seeSpinner();
     const valores = {
       nombre: ['nombre', 'like', '%' + data['nombre'] + '%'],
-      estado: ['estado', '=', data['estado']],
+      estado: ['cuentas.estado', '=', data['estado']],
       saldo: ['saldo', '=', data['saldo'] + ''],
     }
     const keys = Object.keys(valores);
@@ -43,10 +43,7 @@ export class CuentasComponent implements OnInit {
     });
     this.cuentasService.filtrar('filter', dataQuery).subscribe(respuesta => {
       if (respuesta['success']) {
-        this.accountData = respuesta['mensaje'];
-        this.accountData.map(cuenta => {
-          delete cuenta['password'];
-        });
+        this.organizateData(respuesta['mensaje']);
       }
       this.closeSpinner();
     }, error => {
@@ -59,16 +56,22 @@ export class CuentasComponent implements OnInit {
     this.seeSpinner();
     this.cuentasService.obtenerCuentas('listar').subscribe(cuentas => {
       if (cuentas['success']) {
-        cuentas['mensaje'].map(cuenta => {
-          delete cuenta['password'];
-        });
-        this.accountData = cuentas['mensaje'];
+        this.organizateData(cuentas['mensaje']);
       }
       this.closeSpinner();
     }, error => {
       console.log("Error ", error);
       this.closeSpinner();
     });
+  }
+
+  organizateData(cuentas){
+    cuentas.map(cuenta => {
+      delete cuenta['password'];
+      cuenta['fk_usuario'] += ' ' + cuenta['apellidos']
+      delete cuenta['apellidos'];
+    });
+    this.accountData = cuentas;
   }
 
   seeSpinner() {

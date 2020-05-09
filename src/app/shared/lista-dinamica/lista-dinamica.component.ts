@@ -133,7 +133,6 @@ export class ListaDinamicaComponent implements OnInit {
 
   ngOnChanges(changes: SimpleChanges): void {
     this.structureData();
-
   }
 
   structureData() {

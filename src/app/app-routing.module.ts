@@ -22,7 +22,7 @@ import { NoAutenticadoGuard } from './shared/guards/no-autenticado.guard';
 
 const routes: Routes = [
   {
-    path: 'inicio', component: Layout2Component, pathMatch: 'full', canActivate: [NoAutenticadoGuard], children: [{
+    path: '', component: Layout2Component, pathMatch: 'full', canActivate: [NoAutenticadoGuard], children: [{
       path: '', component: HomeComponent,
     }]
   }, {

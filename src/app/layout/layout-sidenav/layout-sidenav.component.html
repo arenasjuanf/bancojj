@@ -1,7 +1,7 @@
 <sidenav [orientation]="orientation" [ngClass]="getClasses()">
   <!-- Inner -->
   <div class="sidenav-inner" [ngClass]="{ 'py-1': orientation !== 'horizontal' }">
-    <sidenav-router-link icon="ion ion-ios-home" route="/inicio" [active]="isActive('/')">
+    <sidenav-router-link icon="ion ion-ios-home" route="/" [active]="isActive('/')">
       Inicio
     </sidenav-router-link>
     <sidenav-menu icon="ion ion-md-people" text="Usuarios" [active]="isMenuActive('/forms')"
@@ -19,19 +19,8 @@
     <sidenav-router-link icon="ion ion-md-close" (click)="logout()">
       Cerrar Sesión
     </sidenav-router-link>
-    <!-- <sidenav-router-link icon="ion ion-md-desktop" [routerLink]="'/consignaciones'"
-      [active]="isActive('/consignaciones')">
-      Consignaciones
-    </sidenav-router-link> -->
     <sidenav-router-link icon="ion ion-md-desktop" [routerLink]="'/cuentas'" [active]="isActive('/cuentas')">
       Cuentas
     </sidenav-router-link>
-
-    <!--  <sidenav-router-link icon="ion ion-md-desktop" [routerLink]="'/login'" [active]="isActive('/login')">
-      Login
-    </sidenav-router-link> -->
-
-
-
   </div>
 </sidenav>

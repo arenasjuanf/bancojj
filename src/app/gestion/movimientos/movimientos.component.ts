@@ -12,7 +12,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 export class MovimientosComponent implements OnInit {
 
   formProperties = ['monto', 'saldo_Actual', 'saldo_anterior'];
-  tableProperties = ['id', 'monto', 'saldo_anterior', 'saldo_Actual', 'creador', 'cuenta', 'transaccion', 'codigo', 'creacion', 'modificado'];
+  tableProperties = ['id', 'monto', 'saldo_anterior', 'saldo_Actual', 'creador', 'cuenta', 'codigo', 'transaccion', 'creacion', 'modificado'];
   listTitle = 'Movimientos';
   movementsData = [{ hola: 2 }, { hola: 2 }, { hola: 2 }]
 
@@ -51,6 +51,10 @@ export class MovimientosComponent implements OnInit {
     this.movementsService.filtrar('filter', dataQuery).subscribe(respuesta => {
       if (respuesta['success']) {
         this.movementsData = respuesta['mensaje'];
+        this.movementsData.map(item => {
+          item['fk_usuario_creador'] += ' ' + item['apellidos'];
+          delete item['apellidos'];
+        });
       }
       this.closeSpinner();
     }, error => {
@@ -64,6 +68,10 @@ export class MovimientosComponent implements OnInit {
     this.movementsService.obtenerMovimientosCuenta('listar/' + id).subscribe(movimientos => {
       if (movimientos['success']) {
         this.movementsData = movimientos['mensaje'];
+        this.movementsData.map(item => {
+          item['fk_usuario_creador'] += ' ' + item['apellidos'];
+          delete item['apellidos'];
+        });
       }
       this.closeSpinner();
     }, error => {
