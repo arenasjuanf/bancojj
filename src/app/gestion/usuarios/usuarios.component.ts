@@ -17,7 +17,7 @@ import { date } from '@rxweb/reactive-form-validators';
     './usuarios.component.css']
 })
 export class UsuariosComponent implements OnInit {
-  formulario: any;
+
 
   constructor(
     private adminService: AdministradorService,
@@ -33,6 +33,7 @@ export class UsuariosComponent implements OnInit {
 
   @HostBinding('class') hostClasses = 'd-flex flex-grow-1 align-items-stretch h-100';
 
+  formulario: any;
   selectedClient: object = {};
   dataUser: object = {};
   sideboxOpened = false;
@@ -140,6 +141,7 @@ export class UsuariosComponent implements OnInit {
     this.formulario.get('estado').setValue(1);
     this.adminService.crearCuenta(this.formulario.value).subscribe(result => {
       if (result['success']) {
+        this.openSnackBar(result['mensaje'], '!');
         this.formulario.reset();
         this.getCuentas();
       }
@@ -153,11 +155,15 @@ export class UsuariosComponent implements OnInit {
   }
 
   irConsignar(cuenta) {
-    this.openModal('Consignación ' + cuenta['nombre'], 'Ingrese cantidad...', 'consignar', cuenta['id'], 'consignarCuenta');
+    this.openModal('Consignación a ' + cuenta['nombre'], 'Ingrese cantidad...', 'consignar', cuenta['id'], 'consignarCuenta');
   }
 
   irRetirar(cuenta) {
     this.openModal('Ingrese código', 'Ingrese...', 'retirar', cuenta['id'], 'retirarCuenta');
+  }
+
+  irCancelarCuenta(cuenta) {
+    this.openModal('¿Desea cancelar la cuenta ' + cuenta['nombre'] + '?', null, '', cuenta['id'], 'cancelarCuenta');
   }
 
   openSnackBar(mensaje: string, action: string) {
@@ -167,20 +173,23 @@ export class UsuariosComponent implements OnInit {
   }
 
   openModal(titulo: string, placeholder: string, tipoModal: string, idCuenta, metodoQuery: string) {
-    Swal.fire({
+    const datos = {
       title: titulo,
-      input: 'text',
-      inputAttributes: {
-        autocapitalize: 'off',
-        placeholder: placeholder
-      },
       showCancelButton: true,
       confirmButtonText: 'Aceptar',
       showLoaderOnConfirm: true,
       cancelButtonText: 'Cancelar',
       preConfirm: (login) => { },
       allowOutsideClick: () => !Swal.isLoading()
-    }).then((result) => {
+    }
+    if (placeholder) {
+      datos['input'] = 'text';
+      datos['inputAttributes'] = {
+        autocapitalize: 'off',
+        placeholder: placeholder
+      }
+    }
+    Swal.fire(datos).then((result) => {
       this.sppiner.show();
       if (result.value) {
         const datos = {

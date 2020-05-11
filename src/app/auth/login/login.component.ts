@@ -50,7 +50,7 @@ export class LoginComponent implements OnInit {
           this.openSnackBar(result['msg'] ? result['msg'] : 'Bienvenido a Bnco WD', '!')
           localStorage.setItem('logged', 'true');
           localStorage.setItem('datosUsuario', JSON.stringify(result['usuario']));
-          this.router.navigateByUrl('/inicio');
+          this.router.navigateByUrl('/');
         } else {
           this.openSnackBar(result['msg'] ? result['msg'] : 'Plataforma solo para admisnitradores.', '!')
         }

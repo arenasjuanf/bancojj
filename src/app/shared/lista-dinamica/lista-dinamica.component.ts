@@ -153,7 +153,11 @@ export class ListaDinamicaComponent implements OnInit {
   validateDate(values) {
     return values.map((value, index) => {
       if (!isNaN((new Date(value)).getTime()) && typeof value !== 'number') {
-        return moment(value).locale('es').format('LLL');
+        if (moment(value).locale('es').format('LLL') !== 'Invalid date') {
+          return moment(value).locale('es').format('LLL');
+        } else {
+          return '';
+        }
       }
       value = this.validateState(index, value);
       return value;

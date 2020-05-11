@@ -65,4 +65,8 @@ export class AdministradorService {
     return this.http.put(this.construirRuta('cuentas/retirar'), datos);
   }
 
+  cancelarCuenta(datos: object) {
+    return this.http.put(this.construirRuta('cuentas/cancelar'), datos);
+  }
+
 }

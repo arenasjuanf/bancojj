@@ -66,8 +66,8 @@
             <input matInput formControlName="nombre">
           </mat-form-field>
           <mat-form-field>
-            <mat-label>clave</mat-label>
-            <input matInput formControlName="clave">
+            <mat-label>Clave</mat-label>
+            <input type="password" matInput formControlName="clave">
           </mat-form-field>
           <mat-form-field>
             <mat-label>Saldo</mat-label>
@@ -91,6 +91,9 @@
               &nbsp;
               <a href="javascript:void(0)" class="text-muted" (click)="irRetirar(cuenta)">Retirar</a> | &nbsp;
               <a href="javascript:void(0)" class="text-muted" (click)="irConsignar(cuenta)">Consignar</a>
+            </div>
+            <div class="text-muted small mt-1">
+              <a href="javascript:void(0)" (click)="irCancelarCuenta(cuenta)">Cancelar cuenta</a>
             </div>
           </div>
         </div>
