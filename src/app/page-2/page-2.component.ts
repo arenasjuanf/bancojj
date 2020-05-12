@@ -3,6 +3,8 @@ import { AppService } from '../app.service';
 import * as moment from 'moment';
 import { UsuariosService } from '../shared/services/usuarios.service';
 import { NgxSpinnerService } from 'ngx-spinner';
+import Swal from 'sweetalert2';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-page-2',
@@ -52,8 +54,9 @@ export class Page2Component implements OnInit {
     private appService: AppService,
     private userService: UsuariosService,
     private sppiner: NgxSpinnerService,
+    private _snackBar: MatSnackBar
   ) {
-    this.appService.pageTitle = 'Mi perfil - Banco WD';
+    this.appService.pageTitle = 'Mi perfil';
     this.dataUser = JSON.parse(localStorage.getItem('datosUsuario'));
     this.getUsersCreate();
   }
@@ -111,6 +114,40 @@ export class Page2Component implements OnInit {
     });
     this.chart1Data = arrayData;
     this.sppiner.hide();
+  }
+
+  inactivateUser(userId, posicion) {
+    const datos = {
+      title: '¿Cambiar el estado del usuario?',
+      showCancelButton: true,
+      confirmButtonText: 'Aceptar',
+      showLoaderOnConfirm: true,
+      cancelButtonText: 'Cancelar',
+      preConfirm: (login) => { },
+      allowOutsideClick: () => !Swal.isLoading()
+    }
+    Swal.fire(datos).then((result) => {
+      this.sppiner.show();
+      if (result.value) {
+        this.userService.inactivarUsuario('inactivar/' + userId).subscribe(respuesta => {
+          this.usersCreate[posicion]['estado'] = (this.usersCreate[posicion]['estado'] === 1 ? 0 : 1);
+          this.openSnackBar(respuesta['mensaje'], '!');
+          this.orderDataStadistics();
+          this.sppiner.hide();
+        }, error => {
+          this.openSnackBar('Error cambiando estado.', '!');
+          this.sppiner.hide();
+        });
+      } else {
+        this.sppiner.hide();
+      }
+    });
+  }
+
+  openSnackBar(mensaje: string, action: string) {
+    this._snackBar.open(mensaje, action, {
+      duration: 2000,
+    });
   }
 
 }

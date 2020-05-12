@@ -33,13 +33,14 @@
     <div class="card mb-4">
       <div class="card-header">Usuarios creados</div>
       <div class="card-body">
-        <div class="media align-items-center pb-1 mb-3" *ngFor="let user of usersCreate">
+        <div class="media align-items-center pb-1 mb-3" *ngFor="let user of usersCreate; let pos = index;">
           <img [src]="user['foto']" class="d-block ui-w-40 rounded-circle">
           <div class="media-body ml-3">
             <a class="text-body">{{ user['nombres'] + ' ' + user['apellidos'] }}</a>
             <div class="text-muted small">{{ user['usuario'] }}</div>
           </div>
-          <a [ngClass]="user['estado'] === 1 ? 'btn-success' : 'btn-danger'" style="color: white;"
+          <a (click)="inactivateUser(user['id'], pos)" [ngClass]="user['estado'] === 1 ? 'btn-success' : 'btn-danger'"
+            style="color: white;"
             class="btn btn-sm rounded-pill">{{ (user['estado'] === 1 ? 'Activo' : 'Inactivo') }}</a>
         </div>
       </div>

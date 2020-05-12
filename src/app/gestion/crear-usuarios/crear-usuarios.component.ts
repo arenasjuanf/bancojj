@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { userModel } from './user-model';
 import { AdministradorService } from 'src/app/shared/services/administrador.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { AppService } from '../../app.service';
 
 @Component({
   selector: 'app-crear-usuarios',
@@ -17,8 +18,11 @@ export class CrearUsuariosComponent implements OnInit {
   constructor(
     private _formBuilder: FormBuilder,
     private adminService: AdministradorService,
-    private _snackBar: MatSnackBar
-  ) { }
+    private _snackBar: MatSnackBar,
+    private appService: AppService
+  ) {
+    this.appService.pageTitle = 'Usuarios';
+  }
 
   ngOnInit() {
     this.initForm();

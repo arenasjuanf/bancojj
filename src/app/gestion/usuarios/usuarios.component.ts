@@ -7,6 +7,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import Swal from 'sweetalert2';
 import * as moment from 'moment';
 import { date } from '@rxweb/reactive-form-validators';
+import { AppService } from '../../app.service';
 
 @Component({
   selector: 'app-usuarios',
@@ -25,7 +26,9 @@ export class UsuariosComponent implements OnInit {
     private sppiner: NgxSpinnerService,
     private router: Router,
     private _snackBar: MatSnackBar,
+    private appService: AppService,
   ) {
+    this.appService.pageTitle = 'Usuarios';
     this.dataUser = JSON.parse(localStorage.getItem('datosUsuario'));
     this.initForm();
     this.getUsers();
@@ -195,7 +198,8 @@ export class UsuariosComponent implements OnInit {
         const datos = {
           cuenta: idCuenta,
           valor: result.value,
-          fechaActual: moment().format('YYYY-MM-DDTHH:mm:ss'),
+          //fechaActual: moment().format('YYYY-MM-DDTHH:mm:ss'),
+          fechaActual: moment(),
           transaccion: (tipoModal === 'retirar' ? 2 : 3),
           creador: this.dataUser['id']
         }
@@ -203,7 +207,7 @@ export class UsuariosComponent implements OnInit {
           this.openSnackBar(respuesta['mensaje'], '!');
           this.getCuentas();
         }, error => {
-          this.openSnackBar('Error en la consignación.', '!');
+          this.openSnackBar('Error.', '!');
           this.sppiner.hide();
         });
       } else {

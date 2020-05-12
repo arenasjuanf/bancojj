@@ -63,7 +63,7 @@ export class HomeComponent implements OnInit {
     private sppiner: NgxSpinnerService,
     private accountService: CuentasService,
   ) {
-    this.appService.pageTitle = 'Home';
+    this.appService.pageTitle = 'Inicio';
   }
 
   ngOnInit(): void {

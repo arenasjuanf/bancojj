@@ -28,7 +28,7 @@ export class MovimientosComponent implements OnInit {
         this.resultAccountSeledtedList(parameter['id']);
       }
     });
-    this.appService.pageTitle = this.listTitle + ' - Banco WD';
+    this.appService.pageTitle = this.listTitle;
   }
 
   ngOnInit() {
