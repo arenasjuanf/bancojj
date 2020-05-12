@@ -29,4 +29,8 @@ export class UsuariosService {
     return this.http.get(this.construirUrl(extension));
   }
 
+  inactivarUsuario(extension) {
+    return this.http.get(this.construirUrl(extension))
+  }
+
 }

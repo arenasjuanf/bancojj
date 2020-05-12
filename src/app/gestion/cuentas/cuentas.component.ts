@@ -20,7 +20,7 @@ export class CuentasComponent implements OnInit {
     private appService: AppService,
     private sppiner: NgxSpinnerService,
   ) {
-    this.appService.pageTitle = this.listTitle + ' - Banco WD';
+    this.appService.pageTitle = this.listTitle;
   }
 
   ngOnInit(): void {
