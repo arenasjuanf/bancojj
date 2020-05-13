@@ -14,7 +14,8 @@ export class MovimientosComponent implements OnInit {
   formProperties = ['monto', 'saldo_Actual', 'saldo_anterior'];
   tableProperties = ['id', 'monto', 'saldo_anterior', 'saldo_Actual', 'creador', 'cuenta', 'codigo', 'transaccion', 'creacion', 'modificado'];
   listTitle = 'Movimientos';
-  movementsData = [{ hola: 2 }, { hola: 2 }, { hola: 2 }]
+  movementsData = [{ hola: 2 }, { hola: 2 }, { hola: 2 }];
+  idCuenta;
 
   constructor(
     private movementsService: MovimientosService,
@@ -25,6 +26,7 @@ export class MovimientosComponent implements OnInit {
     this.activateRoute.paramMap.subscribe(param => {
       const parameter = param['params'];
       if (parameter['id']) {
+        this.idCuenta = parameter['id'];
         this.resultAccountSeledtedList(parameter['id']);
       }
     });
@@ -48,6 +50,7 @@ export class MovimientosComponent implements OnInit {
         dataQuery[key] = valores[key];
       }
     });
+    dataQuery['cuenta'] = this.idCuenta
     this.movementsService.filtrar('filter', dataQuery).subscribe(respuesta => {
       if (respuesta['success']) {
         this.movementsData = respuesta['mensaje'];

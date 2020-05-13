@@ -30,7 +30,7 @@ export class CuentasComponent implements OnInit {
   filterSearchForm(data) {
     this.seeSpinner();
     const valores = {
-      nombre: ['nombre', 'like', '%' + data['nombre'] + '%'],
+      nombre: ['usuarios.nombres', 'like', '%' + data['nombre'] + '%'],
       estado: ['cuentas.estado', '=', data['estado']],
       saldo: ['saldo', '=', data['saldo'] + ''],
     }

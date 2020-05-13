@@ -16,6 +16,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
   ]
 })
 export class LoginComponent implements OnInit {
+
   fondo: any;
   formulario: FormGroup;
 
@@ -30,9 +31,8 @@ export class LoginComponent implements OnInit {
   ) {
     this.appService.pageTitle = 'Inicia Sesión';
     this.fondo = this.setFondo();
-    this.initForm(); 
+    this.initForm();
   }
-
 
   ngOnInit() {
   }
@@ -41,26 +41,25 @@ export class LoginComponent implements OnInit {
     this.sppiner.show();
     const usuario = this.formulario.get('usuario').value;
     const clave = this.formulario.get('clave').value;
-    this.adminService.iniciarSesion(usuario,clave).subscribe(result => {
-      if(result){
-        this.openSnackBar(result['msg'] ? result['msg'] : 'Ingreso Corrrecto' , '!')
-      }
+    this.adminService.iniciarSesion(usuario, clave).subscribe(result => {
       if (result['success']) {
         if (result['usuario']['fk_perfil'] === 1) {
-          this.openSnackBar(result['msg'] ? result['msg'] : 'Bienvenido a Bnco WD', '!')
+          this.openSnackBar(result['msg'] ? result['msg'] : 'Bienvenido a Banco WD', '!')
           localStorage.setItem('logged', 'true');
           localStorage.setItem('datosUsuario', JSON.stringify(result['usuario']));
           this.router.navigateByUrl('/');
         } else {
-          this.openSnackBar(result['msg'] ? result['msg'] : 'Plataforma solo para admisnitradores.', '!')
+          this.openSnackBar(result['msg'] ? result['msg'] : 'Plataforma solo para administradores.', '!')
         }
+      } else {
+        this.formulario.get('clave').setValue('');
+        this.openSnackBar(result['msg'] ? result['msg'] : 'Plataforma solo para administradores.', '!')
       }
       this.sppiner.hide();
     }, error => {
       this.sppiner.hide();
       console.log('errorsini: ', error);
-    })
-
+    });
   }
 
   setFondo() {
@@ -71,7 +70,7 @@ export class LoginComponent implements OnInit {
 
   openSnackBar(mensaje: string, action: string) {
     this._snackBar.open(mensaje, action, {
-      duration: 2000,
+      duration: 3000,
     });
   }
 
