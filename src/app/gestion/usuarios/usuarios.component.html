@@ -71,7 +71,7 @@
           </mat-form-field>
           <mat-form-field>
             <mat-label>Saldo</mat-label>
-            <input matInput formControlName="saldo" type="number" min="100000">
+            <input matInput formControlName="saldo" type="number" min="10000">
           </mat-form-field>
           <button mat-icon-button color="primary" (click)="guardar()"
             [disabled]="!formulario.value.nombre || !formulario.value.clave || !formulario.value.saldo ">

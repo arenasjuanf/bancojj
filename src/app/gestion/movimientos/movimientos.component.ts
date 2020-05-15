@@ -12,7 +12,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 export class MovimientosComponent implements OnInit {
 
   formProperties = ['monto', 'saldo_Actual', 'saldo_anterior'];
-  tableProperties = ['id', 'monto', 'saldo_anterior', 'saldo_Actual', 'creador', 'cuenta', 'codigo', 'transaccion', 'creacion', 'modificado'];
+  tableProperties = ['id', 'monto', 'saldo_anterior', 'saldo_Actual', 'creador', 'cuenta', 'codigo', 'transaccion', 'creado', 'modificado'];
   listTitle = 'Movimientos';
   movementsData = [{ hola: 2 }, { hola: 2 }, { hola: 2 }];
   idCuenta;

@@ -13,7 +13,7 @@ export class AutenticadoGuard implements CanActivate {
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
     if (JSON.parse(localStorage.getItem('datosUsuario'))) {
-      this.router.navigate(['/inicio']);
+      this.router.navigate(['/']);
       return true;
     }
     return true;

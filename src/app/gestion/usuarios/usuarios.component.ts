@@ -65,7 +65,6 @@ export class UsuariosComponent implements OnInit {
     });
   }
 
-
   selectClient(client) {
     this.selectedClient = client;
     this.sideboxOpened = true;
@@ -132,20 +131,23 @@ export class UsuariosComponent implements OnInit {
       nombre: '',
       clave: '',
       saldo: 10000,
-      tipoCuenta: '',
+      tipoCuenta: 'Ahorro',
       idUsuario: '',
-      estado: ''
+      estado: '',
+      creador: this.dataUser['id']
     });
   }
 
   guardar() {
     this.formulario.get('idUsuario').setValue(this.selectedClient['id']);
-    this.formulario.get('tipoCuenta').setValue(1);
     this.formulario.get('estado').setValue(1);
     this.adminService.crearCuenta(this.formulario.value).subscribe(result => {
       if (result['success']) {
         this.openSnackBar(result['mensaje'], '!');
         this.formulario.reset();
+        this.formulario.get('saldo').setValue(10000);
+        this.formulario.get('creador').setValue(this.dataUser['id']);
+        this.formulario.get('tipoCuenta').setValue('Ahorro');
         this.getCuentas();
       }
     }, error => {

@@ -11,7 +11,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 export class CuentasComponent implements OnInit {
 
   formProperties = ['nombre', 'estado', 'saldo'];
-  tableProperties = ['id', 'propietario', 'nombre', 'saldo', 'estado', 'tipo_cuenta', 'creacion', 'modificada'];
+  tableProperties = ['id', 'propietario', 'nombre', 'saldo', 'estado', 'tipo_cuenta', 'creado', 'modificada'];
   listTitle = 'Cuentas';
   accountData: Array<object> = [];
 

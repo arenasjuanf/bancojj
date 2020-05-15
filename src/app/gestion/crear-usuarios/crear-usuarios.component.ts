@@ -4,6 +4,7 @@ import { userModel } from './user-model';
 import { AdministradorService } from 'src/app/shared/services/administrador.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { AppService } from '../../app.service';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-crear-usuarios',
@@ -19,7 +20,8 @@ export class CrearUsuariosComponent implements OnInit {
     private _formBuilder: FormBuilder,
     private adminService: AdministradorService,
     private _snackBar: MatSnackBar,
-    private appService: AppService
+    private appService: AppService,
+    private sppiner: NgxSpinnerService,
   ) {
     this.appService.pageTitle = 'Usuarios';
   }
@@ -38,6 +40,7 @@ export class CrearUsuariosComponent implements OnInit {
 
   crear() {
     if (this.formulario.value) {
+      this.sppiner.show();
       const idUsuario = JSON.parse(localStorage.getItem('datosUsuario'))['usuario']['id'];
       this.formulario.value.usuario_creador = idUsuario;
       this.adminService.crearUsuario(this.formulario.value).subscribe(result => {
@@ -49,8 +52,10 @@ export class CrearUsuariosComponent implements OnInit {
             this.openSnackBar(result['mensaje'] ? result['mensaje'] : 'Error', '!');
           }
         }
+        this.sppiner.hide();
       }, error => {
         this.openSnackBar(error.message, ':(');
+        this.sppiner.hide();
       });
     }
   }

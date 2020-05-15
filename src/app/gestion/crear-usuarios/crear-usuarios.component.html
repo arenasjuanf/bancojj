@@ -19,7 +19,7 @@
                 </div>
                 <div class="form-group col-md-6">
                     <label class="form-label">Correo</label>
-                    <input  class="form-control" placeholder="Correo" formControlName="correo">
+                    <input class="form-control" placeholder="Correo" formControlName="correo">
                 </div>
                 <div class="form-group col-md-6">
                     <label class="form-label">Documento</label>
@@ -34,11 +34,10 @@
                     <input type="password" class="form-control" formControlName="clave">
                 </div>
             </div>
-            
+
             <button type="submit" class="btn btn-primary" [disabled]="!formulario.valid">Crear Usuario</button>
             <button type="button" (click)="cancelar()" class="btn btn-danger">Cancelar</button>
-            
-            
         </form>
     </div>
+    <app-spinner></app-spinner>
 </div>
