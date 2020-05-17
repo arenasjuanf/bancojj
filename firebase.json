@@ -1,6 +1,6 @@
 {
   "hosting": {
-    "public": "dist/angular-starter",
+    "public": "dit/angular-starter",
     "ignore": [
       "firebase.json",
       "**/.*",

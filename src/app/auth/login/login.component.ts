@@ -65,7 +65,7 @@ export class LoginComponent implements OnInit {
   }
 
   setFondo() {
-    const num = Math.floor(Math.random() * 17);
+    const num = Math.floor(Math.random() * 12);
     const fondo = `background-image: url('../assets/vendor/img/${num}.jpg');`;
     return this.sanitizer.bypassSecurityTrustStyle(fondo);
   }

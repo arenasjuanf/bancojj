@@ -52,6 +52,10 @@ export class AdministradorService {
   }
 
   listarUsuarios() {
+    this.headers = new HttpHeaders({
+      'Authorization': localStorage.getItem('token'),
+      'tokenTime': localStorage.getItem('tiempoToken')
+    });
     return this.http.get(this.construirRuta('usuarios/listar'), { headers: this.headers });
   }
 
