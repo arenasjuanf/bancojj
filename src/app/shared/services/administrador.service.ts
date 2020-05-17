@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 import { Router } from '@angular/router';
-import { FormBuilder } from '@angular/forms';
 
 @Injectable({
   providedIn: 'root'
@@ -10,12 +9,15 @@ import { FormBuilder } from '@angular/forms';
 export class AdministradorService {
 
   urlBase = environment.urlApi;
+  headers = new HttpHeaders({
+    'Authorization': localStorage.getItem('token'),
+    'tokenTime': localStorage.getItem('tiempoToken')
+  });
 
   constructor(
     private http: HttpClient,
     private router: Router,
-  ) {
-  }
+  ) { }
 
   iniciarSesion(usuario, clave) {
     const credenciales = 'login/' + usuario + '/' + clave;
@@ -33,6 +35,7 @@ export class AdministradorService {
   cerrarSesion() {
     localStorage.setItem('logged', 'false');
     localStorage.removeItem('datosUsuario');
+    localStorage.clear();
     this.router.navigateByUrl('/login');
   }
 
@@ -41,31 +44,31 @@ export class AdministradorService {
   }
 
   crearUsuario(datos: object) {
-    return this.http.post(this.construirRuta('usuarios/crear'), datos);
+    return this.http.post(this.construirRuta('usuarios/crear'), datos, { headers: this.headers });
   }
 
   crearCuenta(datos: object) {
-    return this.http.post(this.construirRuta('cuentas/crear'), datos);
+    return this.http.post(this.construirRuta('cuentas/crear'), datos, { headers: this.headers });
   }
 
   listarUsuarios() {
-    return this.http.get(this.construirRuta('usuarios/listar'));
+    return this.http.get(this.construirRuta('usuarios/listar'), { headers: this.headers });
   }
 
   getUserAccounts(idUser) {
-    return this.http.get(this.construirRuta('cuentas/listar/' + idUser));
+    return this.http.get(this.construirRuta('cuentas/listar/' + idUser), { headers: this.headers });
   }
 
   consignarCuenta(datos: object) {
-    return this.http.put(this.construirRuta('cuentas/consignar'), datos);
+    return this.http.put(this.construirRuta('cuentas/consignar'), datos, { headers: this.headers });
   }
 
   retirarCuenta(datos: object) {
-    return this.http.put(this.construirRuta('cuentas/retirar'), datos);
+    return this.http.put(this.construirRuta('cuentas/retirar'), datos, { headers: this.headers });
   }
 
   cancelarCuenta(datos: object) {
-    return this.http.put(this.construirRuta('cuentas/cancelar'), datos);
+    return this.http.put(this.construirRuta('cuentas/cancelar'), datos, { headers: this.headers });
   }
 
 }

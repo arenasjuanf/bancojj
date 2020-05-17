@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 import { prop } from '@rxweb/reactive-form-validators';
 
@@ -9,16 +9,18 @@ import { prop } from '@rxweb/reactive-form-validators';
 export class UsuariosService {
 
   urlBase = environment.urlApi;
-  path = 'usuarios/'
+  path = 'usuarios/';
+  headers = new HttpHeaders({
+    'Authorization': localStorage.getItem('token'),
+    'tokenTime': localStorage.getItem('tiempoToken')
+  });
 
-  constructor(private http: HttpClient) {
-
-  }
+  constructor(private http: HttpClient) { }
 
   /* Metodos */
 
   obtenerUsuarios(extension) {
-    return this.http.get(this.construirUrl(extension));
+    return this.http.get(this.construirUrl(extension), { headers: this.headers });
   }
 
   construirUrl(extension) {
@@ -26,11 +28,11 @@ export class UsuariosService {
   }
 
   getUserCreate(extension) {
-    return this.http.get(this.construirUrl(extension));
+    return this.http.get(this.construirUrl(extension), { headers: this.headers });
   }
 
   inactivarUsuario(extension) {
-    return this.http.get(this.construirUrl(extension))
+    return this.http.get(this.construirUrl(extension), { headers: this.headers })
   }
 
 }
