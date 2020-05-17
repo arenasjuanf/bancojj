@@ -80,7 +80,7 @@
         </mat-expansion-panel>
       </mat-accordion>
       <hr class="border-light m-0">
-      <div class="p-4 text-center ">
+      <div class="p-4 text-center" *ngIf="selectedClient['estado'] !== 0">
         <h6 class="mb-3 mt-3">Cuentas</h6>
         <div *ngIf="arrayCuentas.length">
           <div *ngFor="let cuenta of arrayCuentas; let i = index" class="ui-bordered py-2 px-3"
@@ -98,6 +98,9 @@
           </div>
         </div>
         <div *ngIf="!arrayCuentas.length" class="text-lighter my-4">No hay cuentas</div>
+      </div>
+      <div class="p-4 text-center" *ngIf="selectedClient['estado'] === 0">
+        <div class="mb-3 mt-3">Usuario esta inactivo</div>
       </div>
     </div>
   </div>

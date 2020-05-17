@@ -1,18 +1,22 @@
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
 })
 export class MovimientosService {
   urlBase = environment.urlApi;
-  path = 'movimientos/'
+  path = 'movimientos/';
+  headers = new HttpHeaders({
+    'Authorization': localStorage.getItem('token'),
+    'tokenTime': localStorage.getItem('tiempoToken')
+  });
 
   constructor(private http: HttpClient) { }
 
   obtenerMovimientosCuenta(extension) {
-    return this.http.get(this.construirUrl(extension))
+    return this.http.get(this.construirUrl(extension), { headers: this.headers })
   }
 
   construirUrl(extension) {
@@ -20,11 +24,11 @@ export class MovimientosService {
   }
 
   filtrar(extension, values) {
-    return this.http.post(this.construirUrl(extension), values);
+    return this.http.post(this.construirUrl(extension), values, { headers: this.headers });
   }
 
   listarEstadistica(extension) {
-    return this.http.get(this.construirUrl(extension))
+    return this.http.get(this.construirUrl(extension), { headers: this.headers })
   }
 
 }
