@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { AppService } from '../../app.service';
 import { LayoutService } from '../layout.service';
 import { AdministradorService } from 'src/app/shared/services/administrador.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-layout-sidenav',
@@ -58,8 +59,21 @@ export class LayoutSidenavComponent implements AfterViewInit {
     this.layoutService.toggleCollapsed();
   }
 
-  logout(){
-    this.adminService.cerrarSesion();
+  logout() {
+    const datos = {
+      title: '¿Cerrar sesión?',
+      showCancelButton: true,
+      confirmButtonText: 'Aceptar',
+      showLoaderOnConfirm: true,
+      cancelButtonText: 'Cancelar',
+      preConfirm: (login) => { },
+      allowOutsideClick: () => !Swal.isLoading()
+    }
+    Swal.fire(datos).then((result) => {
+      if (result.value) {
+        this.adminService.cerrarSesion();
+      }
+    });
   }
 
 }
